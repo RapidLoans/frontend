@@ -17,7 +17,7 @@ const Navbar = dynamic(() => import("@/components/menu/Menu"), {
 });
 
 export const metadata: Metadata = {
-  title: "Aerodump",
+  title: "RapidLoans",
   description: "Seamless, Secure, and Automated Multi-Network Token Distribution",
 };
 

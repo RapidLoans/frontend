@@ -4,8 +4,6 @@ import Link from "next/link";
 import "./menu.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import Image from "next/image";
 import { GrClose } from "react-icons/gr";
 import { useRouter } from "next/navigation";
 
@@ -100,10 +98,12 @@ const Menu = () => {
       <div className="menu-overlay">
         <div className="menu-overlay-bar">
           <div className="menu-logo">
-            <Link href={"/"}>RapidLoans</Link>
+            <Link href={"/"}>
+              RapidLoans
+            </Link>
           </div>
           <div className="menu-close" onClick={toggleMenu}>
-            <GrClose id={"close"} />
+            <GrClose id={"close"}  className="items-self-baseline"/>
           </div>
         </div>
 

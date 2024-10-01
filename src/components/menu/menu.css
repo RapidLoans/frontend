@@ -3,20 +3,19 @@
     top: 0;
     left: 0;
     width: 100vw;
-    /*padding: 1.75em;*/
+    padding: 2rem 6rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 2;
-    @apply text-foreground h-24 bg-background/20 backdrop-blur-lg py-[1.75em] px-4 pr-10 md:px-20 lg:px-36;
+    @apply text-foreground h-24 bg-background/20 backdrop-blur-lg;
 }
-
 #close {
-    @apply text-neutral-900 cursor-pointer text-2xl mr-5 lg:mr-28 z-[999];
+    @apply text-neutral-900 cursor-pointer text-2xl z-[999];
 }
 
 #open {
-    @apply cursor-pointer text-2xl;
+    @apply cursor-pointer text-2xl z-[998];
 }
 
 .menu-bar a,
@@ -36,7 +35,6 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    padding: 2rem 6rem;
     background: #F8F6E3;
     z-index: 999;
     display: flex;
@@ -47,7 +45,7 @@
     width: 100%;
     top: 0;
     left: 0;
-    padding: 2em;
+    padding: 2rem 6rem;
     display: flex;
     justify-content: space-between;
 }
