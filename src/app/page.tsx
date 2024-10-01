@@ -1,5 +1,9 @@
+import LinkWalletButton from "./(components)/LinkWalletButton";
+
 export default function Home() {
   return (
-    <div>HII</div>
+    <div>
+      <LinkWalletButton />
+    </div>
   );
 }
