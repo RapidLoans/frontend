@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
-// Extend the Window interface to include tronWeb
+import React, { useEffect, useState } from "react";
 
+// Extend the Window interface to include tronWeb
 declare global {
   interface Window {
     tron: {
@@ -17,10 +17,18 @@ declare global {
 const LinkWalletButton: React.FC = () => {
   const [address, setAddress] = useState<string>("");
 
+  // Load address from local storage when the component mounts
+  useEffect(() => {
+    const storedAddress = localStorage.getItem("tronAddress");
+    if (storedAddress) {
+      setAddress(storedAddress);
+    }
+  }, []);
+
   const handleConnectWallet = async () => {
     try {
-      if (window.tron == undefined) {
-        alert("Please install TronLink wallet from official website");
+      if (window.tron === undefined) {
+        alert("Please install TronLink wallet from the official website");
         return;
       }
 
@@ -29,7 +37,16 @@ const LinkWalletButton: React.FC = () => {
 
       if (tron && tronWeb) {
         const accountAddress = tronWeb.defaultAddress.base58;
-        if (typeof accountAddress == "string") setAddress(accountAddress);
+
+        // Ensure accountAddress is a string before setting it
+        if (typeof accountAddress === "string") {
+          setAddress(accountAddress);
+          localStorage.setItem("tronAddress", accountAddress); // Save to local storage
+        } else {
+          alert(
+            "Could not retrieve a valid address. Please log into your TronLink wallet."
+          );
+        }
       } else {
         alert("Please login to your wallet first");
       }
