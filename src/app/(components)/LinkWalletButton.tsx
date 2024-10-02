@@ -1,70 +1,50 @@
 "use client";
-import React, { useEffect, useState } from "react";
 
-// Extend the Window interface to include tronWeb
-declare global {
-  interface Window {
-    tron: {
-      tronWeb: {
-        defaultAddress: {
-          base58: string | false;
-        };
-      };
-    };
-  }
-}
+import React, { useState, useEffect, useMemo } from "react";
+import { TronLinkAdapter } from "@tronweb3/tronwallet-adapters";
 
-const LinkWalletButton: React.FC = () => {
-  const [address, setAddress] = useState<string>("");
+const App: React.FC = () => {
+  const adapter = useMemo(() => new TronLinkAdapter(), []);
+  const [account, setAccount] = useState<string>("");
 
-  // Load address from local storage when the component mounts
   useEffect(() => {
-    const storedAddress = localStorage.getItem("tronAddress");
-    if (storedAddress) {
-      setAddress(storedAddress);
-    }
-  }, []);
+    setAccount(adapter.address!);
+    adapter.on("connect", () => {
+      setAccount(adapter.address!);
+    });
 
-  const handleConnectWallet = async () => {
+    adapter.on("accountsChanged", (data: string) => {
+      setAccount(data);
+    });
+
+    adapter.on("disconnect", () => {
+      // Handle disconnection logic
+      adapter.disconnect();
+    });
+
+    return () => {
+      adapter.removeAllListeners();
+    };
+  }, [adapter]);
+
+  const handleConnect = async () => {
     try {
-      if (window.tron === undefined) {
-        alert("Please install TronLink wallet from the official website");
-        return;
-      }
-
-      const tron = window.tron;
-      const tronWeb = tron.tronWeb;
-
-      if (tron && tronWeb) {
-        const accountAddress = tronWeb.defaultAddress.base58;
-
-        // Ensure accountAddress is a string before setting it
-        if (typeof accountAddress === "string") {
-          setAddress(accountAddress);
-          localStorage.setItem("tronAddress", accountAddress); // Save to local storage
-        } else {
-          alert(
-            "Could not retrieve a valid address. Please log into your TronLink wallet."
-          );
-        }
-      } else {
-        alert("Please login to your wallet first");
-      }
+      await adapter.connect();
+      console.log(account);
     } catch (error) {
-      console.log("There is some issue:", error);
+      console.log(error);
     }
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <button
-        className="mt-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-3 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
-        onClick={handleConnectWallet}
-      >
-        {address ? `Connected: ${address}` : "Connect TronLink"}
-      </button>
-    </div>
+    <button
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+      disabled={adapter.connected}
+      onClick={handleConnect}
+    >
+      Connect
+    </button>
   );
 };
 
-export default LinkWalletButton;
+export default App;
