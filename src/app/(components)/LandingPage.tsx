@@ -3,41 +3,6 @@ import React from "react";
 const LandingPage: React.FC = () => {
   return (
     <div className="bg-gray-50">
-      {/* Navbar */}
-      <header className="bg-white shadow-lg fixed w-full z-50">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <div className="text-2xl font-extrabold text-indigo-600">
-            RapidLoans
-          </div>
-          <nav className="space-x-8 text-lg">
-            <a
-              href="#features"
-              className="hover:text-indigo-600 transition duration-200 ease-in-out"
-            >
-              Features
-            </a>
-            <a
-              href="#how-it-works"
-              className="hover:text-indigo-600 transition duration-200 ease-in-out"
-            >
-              How It Works
-            </a>
-            <a
-              href="#testimonials"
-              className="hover:text-indigo-600 transition duration-200 ease-in-out"
-            >
-              Testimonials
-            </a>
-            <a
-              href="#contact"
-              className="hover:text-indigo-600 transition duration-200 ease-in-out"
-            >
-              Contact
-            </a>
-          </nav>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-indigo-600 to-blue-500 text-white py-20 pt-28 lg:pt-40">
         <div className="absolute inset-0 bg-black opacity-30"></div>

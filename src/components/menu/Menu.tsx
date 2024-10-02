@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { gsap } from "gsap";
 import { GrClose } from "react-icons/gr";
 import { useRouter } from "next/navigation";
+import ConnectWallet from "@/app/(components)/ConnectWallet";
 
 // Dummy user & isAdmin variables (Replace with actual logic or props)
 const user = null; // Replace with actual user state or context
@@ -85,25 +86,28 @@ const Menu = () => {
   return (
     <div className="menu-container" ref={container}>
       <div className="menu-bar">
-        <div className="menu-logo">
+        <div className="menu-logo font-bold text-xl">
           <Link href={"/"}>
             RapidLoans
           </Link>
         </div>
-        <div className="menu-open" onClick={toggleMenu}>
-          <GiHamburgerMenu id={"open"} />
+        <div className=" flex gap-2 items-center justify-center">
+          <ConnectWallet />
+          <div className="menu-open" onClick={toggleMenu}>
+            <GiHamburgerMenu id={"open"} />
+          </div>
         </div>
       </div>
 
       <div className="menu-overlay">
         <div className="menu-overlay-bar">
-          <div className="menu-logo">
+          <div className="menu-logo font-bold text-xl">
             <Link href={"/"}>
               RapidLoans
             </Link>
           </div>
           <div className="menu-close" onClick={toggleMenu}>
-            <GrClose id={"close"}  className="items-self-baseline"/>
+            <GrClose id={"close"} className="items-self-baseline" />
           </div>
         </div>
 

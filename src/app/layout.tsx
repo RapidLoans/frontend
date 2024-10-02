@@ -4,6 +4,7 @@ import "./globals.css";
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import { Toaster } from "@/components/ui/sonner"
+import { WalletProvider } from "@/Providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,11 +30,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} font-sans`}>
       <body>
+        <WalletProvider>
           <Suspense fallback={<div>Loading...</div>}>
             <Navbar />
           </Suspense>
           <main>{children}</main>
           <Toaster />
+        </WalletProvider>
       </body>
     </html>
   );
