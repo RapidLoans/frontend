@@ -35,19 +35,13 @@ const handleClick = async () => {
   try {
     const tronWeb = await getTronWeb();
 
-    // const tx = await tronWeb.transactionBuilder.sendTrx(
-    //   "TU2ZqKThH9ToKhLvdPFeVKYGjtBXZnyQfk",
-    //   1000,
-    //   tronWeb?.defaultAddress?.base58
-    // );
-
-    // const signedTx = await tronWeb.trx.sign(tx);
-    // const receipt = await tronWeb.trx.sendRawTransaction(signedTx);
-    // console.log(receipt);
+    if (!tronWeb) {
+      console.error("TronWeb instance not available");
+      return;
+    }
 
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
     const txID = await myContract.addTRX().send({ callValue: 2000 });
-    // Check tx status on the explorer: https://nile.tronscan.org/#/transaction/${txId}
     console.log(txID);
 
     const balanceInSun = await tronWeb.trx.getBalance(CONTRACT_ADDRESS);
