@@ -1,10 +1,9 @@
-"use client"
-import React, { useContext, useEffect } from 'react'
+"use client";
+import React, { useContext, useEffect } from "react";
+import LendingPool from "../(components)/LendingPool";
 
 const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+  return <LendingPool />;
+};
 
-export default page
+export default page;

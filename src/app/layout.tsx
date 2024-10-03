@@ -1,20 +1,26 @@
-"use client"
-import type { Metadata } from "next";
+"use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
-import { Toaster } from "@/components/ui/sonner"
-import { useWallet, WalletProvider } from '@tronweb3/tronwallet-adapter-react-hooks';
-import { WalletDisconnectedError, WalletError, WalletNotFoundError } from '@tronweb3/tronwallet-abstract-adapter';
-import { WalletModalProvider } from '@tronweb3/tronwallet-adapter-react-ui';
-import { toast } from "sonner"
-import '@tronweb3/tronwallet-adapter-react-ui/style.css';
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import { Toaster } from "@/components/ui/sonner";
+import {
+  useWallet,
+  WalletProvider,
+} from "@tronweb3/tronwallet-adapter-react-hooks";
+import {
+  WalletDisconnectedError,
+  WalletError,
+  WalletNotFoundError,
+} from "@tronweb3/tronwallet-abstract-adapter";
+import { WalletModalProvider } from "@tronweb3/tronwallet-adapter-react-ui";
+import { toast } from "sonner";
+import "@tronweb3/tronwallet-adapter-react-ui/style.css";
 
 const inter = Inter({
   subsets: ["latin"],
-  display: 'swap',
-  variable: '--font-inter',
+  display: "swap",
+  variable: "--font-inter",
 });
 
 const Navbar = dynamic(() => import("@/components/menu/Menu"), {
