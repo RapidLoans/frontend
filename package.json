@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@tronweb3/tronwallet-abstract-adapter": "^1.1.7",
+    "@tronweb3/tronwallet-adapter-react-hooks": "^1.1.8",
+    "@tronweb3/tronwallet-adapter-react-ui": "^1.1.9",
     "@tronweb3/tronwallet-adapters": "^1.2.4",
     "gsap": "^3.12.5",
     "next": "14.2.13",
