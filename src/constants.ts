@@ -1,56 +1,272 @@
-export const CONTRACT_ADDRESS = "TWMdnkkrxWwAZxYPwgW4Ju8CMDX2Yxxhta";
+export const CONTRACT_ADDRESS = "TVQFYdkqmz7krjq85YjBXzn5jTBpGyeuqN";
 
 export const LendingPoolABI = [
-  { stateMutability: "Nonpayable", type: "Constructor" },
-  { inputs: [{ type: "address" }], name: "NewInvestor", type: "Event" },
   {
-    outputs: [{ type: "address" }],
-    inputs: [{ name: "amount", type: "uint256" }],
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "NewInvestor",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "BORROW_RATE",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
     name: "addJST",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    outputs: [{ type: "address" }],
+    inputs: [],
     name: "addTRX",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "payable",
     type: "function",
   },
   {
-    inputs: [{ name: "amount", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "borrowJST",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "borrowTRX",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
     name: "flashLoanJST",
-    stateMutability: "payable",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{ name: "amount", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "flashLoanCore",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
     name: "flashLoanTRX",
-    stateMutability: "payable",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
-    outputs: [{ type: "tuple" }],
+    inputs: [],
+    name: "getContractJSTBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getContractTRXBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_add",
+        type: "address",
+      },
+    ],
     name: "getInvestorStruct",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "investorId",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "investor",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "balanceTRX",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "balanceJST",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct LiquidityPool.investor",
+        name: "",
+        type: "tuple",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    outputs: [{ type: "uint256" }],
-    inputs: [{ name: "_add", type: "address" }],
-    name: "getInvestorTRXBalance",
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "getUserJSTBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    outputs: [{ type: "address" }],
-    name: "getTest",
+    inputs: [
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "getUserTRXBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    outputs: [{ type: "address" }],
+    inputs: [],
     name: "jst",
+    outputs: [
+      {
+        internalType: "contract ITRC20",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "withdrawJST",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "withdrawTRX",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
   },
 ];

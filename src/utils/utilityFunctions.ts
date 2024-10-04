@@ -52,9 +52,8 @@ export const handleTRXInvestment = async () => {
 
   try {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
-    const tx = await myContract
-      .getInvestorStruct(tronWeb.defaultAddress.base58)
-      .call();
+    const str: string = tronWeb.defaultAddress.base58;
+    const tx = await myContract.getInvestorStruct(str).call();
     const hex = tx.balanceTRX?._hex;
     const dec = parseInt(hex, 16);
     console.log(`TRX Balance (decimal): ${dec}`);
