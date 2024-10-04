@@ -53,7 +53,7 @@ export const handleTRXInvestment = async () => {
   try {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
     const tx = await myContract.getInvestorStruct().call();
-    const hex = tx.balanceTRX._hex;
+    const hex = tx.balanceTRX?._hex;
     const dec = parseInt(hex, 16);
     console.log(`JST Balance (decimal): ${dec}`);
     return dec;
@@ -70,7 +70,7 @@ export const handleJSTInvestment = async () => {
   try {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
     const tx = await myContract.getInvestorStruct().call();
-    const hex = tx.balanceJST._hex;
+    const hex = tx.balanceJST?._hex;
     const dec = parseInt(hex, 16);
     console.log(`JST Balance (decimal): ${dec}`);
     return dec;
