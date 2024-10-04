@@ -16,12 +16,12 @@ export const FeatureCard = ({
   return (
     <HoverScaleAnimation>
       <Link href={link}>
-        <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center">
+        <div className="bg-neutral-300 dark:bg-neutral-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center">
           <div className="flex justify-center items-center w-14 h-14 bg-gray-700 bg-opacity-60 rounded-full mb-4">
             <Icon className="text-purple-300" size={25} />
           </div>
-          <h3 className="text-white text-xl font-semibold mb-3">{title}</h3>
-          <p className="text-gray-300">{description}</p>
+          <h3 className="text-black dark:text-white text-xl font-semibold mb-3">{title}</h3>
+          <p className="text-black  dark:text-gray-300">{description}</p>
         </div>
       </Link>
     </HoverScaleAnimation>

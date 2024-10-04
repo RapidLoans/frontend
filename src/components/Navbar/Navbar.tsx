@@ -6,7 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { gsap } from "gsap";
 import { GrClose } from "react-icons/gr";
 import { useRouter } from "next/navigation";
-import ConnectWallet from "@/app/(components)/ConnectWallet";
+import { WalletActionButton } from "@tronweb3/tronwallet-adapter-react-ui";
 
 // Dummy user & isAdmin variables (Replace with actual logic or props)
 const user = null; // Replace with actual user state or context
@@ -80,7 +80,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className=" flex gap-2 items-center justify-center">
-          <ConnectWallet />
+          <WalletActionButton className="rounded-3xl" />
           <div className="menu-open" onClick={toggleMenu}>
             <GiHamburgerMenu id={"open"} />
           </div>
