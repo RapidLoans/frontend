@@ -140,16 +140,9 @@ const Navbar = () => {
 
         <div className="menu-info">
           <div className="menu-info-col">
-            <a href="#">X &#8599;</a>
-            <a href="https://www.instagram.com/acm_abesec/">
-              Instagram &#8599;
-            </a>
-            <a href="#">LinkedIn &#8599;</a>
-            <a href="#">Facebook &#8599;</a>
-          </div>
-          <div className="menu-info-col">
-            <p>acmwebsite.co.in</p>
-            <p>987654321</p>
+            <a href="https://x.com/">X &#8599;</a>
+            <br />
+            <a href="https://rapidloans.vercel.app">rapidloans.vercel.app &#8599;</a>
           </div>
         </div>
       </div>

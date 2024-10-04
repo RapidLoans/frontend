@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 export const cards = [
   {
     title: "Borrow",
-    src: "/images/borrow.jpg",
+    src: "https://www.pexels.com/photo/an-artist-s-illustration-of-artificial-intelligence-ai-this-image-represents-ethics-research-understanding-human-involvement-in-data-labelling-it-was-created-by-ariel-lu-as-part-of-the-18068746/",
   },
   {
     title: "Invest",
@@ -16,7 +16,6 @@ export const cards = [
     src: "/images/flash-loan.jpg",
   },
 ];
-
 
 const page = () => {
     const [contractBalance, setContractBalance] = useState(0);
