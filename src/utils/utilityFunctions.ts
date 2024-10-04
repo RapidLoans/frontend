@@ -59,7 +59,7 @@ export const handleTRXInvestment = async () => {
     console.log(`TRX Balance (decimal): ${dec}`);
     return dec;
   } catch (error) {
-    console.error("Error in TRX investment transaction:", error);
+    console.error("Error in TRX Balance :", error);
     return 0;
   }
 };
@@ -70,13 +70,15 @@ export const handleJSTInvestment = async () => {
 
   try {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
-    const tx = await myContract.getInvestorStruct().call();
+    const tx = await myContract
+      .getInvestorStruct(tronWeb.defaultAddress.base58)
+      .call();
     const hex = tx.balanceJST?._hex;
     const dec = parseInt(hex, 16);
     console.log(`JST Balance (decimal): ${dec}`);
     return dec;
   } catch (error) {
-    console.error("Error in JST investment transaction:", error);
+    console.error("Error in JST Balance :", error);
     return 0;
   }
 };
@@ -90,7 +92,7 @@ export const InvestInTRX = async () => {
 
     await myContract.addTRX().send({ callValue: 2000 });
   } catch (error) {
-    console.error("Error in JST investment transaction:", error);
+    console.error("Error in TRX investment transaction:", error);
   }
 };
 
@@ -100,8 +102,12 @@ export const InvestInJST = async () => {
 
   try {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const approveTx = await myContract.approve(CONTRACT_ADDRESS, 1000).send();
 
-    await myContract.addJST(1000).send();
+    if (approveTx) {
+      await myContract.addJST(1000).send();
+      console.log("Transaction successful");
+    }
   } catch (error) {
     console.error("Error in JST investment transaction:", error);
   }
