@@ -1,4 +1,5 @@
 import { CONTRACT_ADDRESS, LendingPoolABI } from "@/constants";
+import { txCheckWithArgs } from "tronweb/utils";
 
 // Function to get the TronWeb instance
 export const getTronWeb = async () => {
@@ -39,9 +40,31 @@ export const fetchContractBalance = async () => {
 
   try {
     const balanceInSun: number = await tronWeb.trx.getBalance(CONTRACT_ADDRESS);
+    console.log("balance",balanceInSun);
     return balanceInSun;
   } catch (error) {
     console.error("Error fetching contract balance:", error);
+    return 0;
+  }
+};
+
+export const fetchContractTRXBalance = async () => {
+  const tronWeb = await getTronWeb();
+  if (!tronWeb) return 0;
+
+  try {
+    fetchContractBalance()
+    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const tx = await myContract
+      .getContractJSTBalance()
+      .call();
+      console.log("tx",tx)
+    const hex = tx.balanceTRX?._hex;
+    const dec = parseInt(hex, 16);
+    console.log(`TRX Balance (decimal): ${dec}`);
+    return dec;
+  } catch (error) {
+    console.error("Error in TRX Balance :", error);
     return 0;
   }
 };
@@ -73,6 +96,7 @@ export const handleJSTInvestment = async () => {
     const tx = await myContract
       .getInvestorStruct(tronWeb.defaultAddress.base58)
       .call();
+    console.log("tx", tx)
     const hex = tx.balanceJST?._hex;
     const dec = parseInt(hex, 16);
     console.log(`JST Balance (decimal): ${dec}`);

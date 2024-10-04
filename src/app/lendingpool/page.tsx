@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, useEffect } from "react";
 import {
   handleTRXInvestment,
@@ -6,26 +6,31 @@ import {
   fetchContractBalance,
   InvestInTRX,
   InvestInJST,
+  fetchContractTRXBalance,
 } from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { FeatureCards } from "./utils";
 
 const Page = () => {
-  const [contractBalance, setContractBalance] = useState(0);
+  const [contractJSTBalance, setContractJSTBalance] = useState(0)
+  const [contractTRXBalance, setContractTRXBalance] = useState(0)
   const [amountInTRX, setAmountInTRX] = useState(0);
   const [amountInJST, setAmountInJST] = useState(0);
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const x = await fetchContractBalance();
-        setContractBalance(x);
+        // const y = await handleJSTInvestment();
+        // setAmountInJST(y);
 
-        const y = await handleJSTInvestment();
-        setAmountInJST(y);
+        // const z = await handleTRXInvestment();
+        // setAmountInTRX(z);
 
-        const z = await handleTRXInvestment();
-        setAmountInTRX(z);
+        // const a = await fetchContractJSTBalance()
+        // setContractJSTBalance(a)
+
+        const b = await fetchContractTRXBalance()
+        setContractTRXBalance(b)
       } catch (error) {
         console.error("Error fetching contract data:", error);
       }
@@ -41,19 +46,12 @@ const Page = () => {
         Lending Pool
       </div>
       <div className="px-4 md:px-[6rem]">
-        <TextGenerateEffect
-          words={`Current Contract Balance is ${contractBalance} TRX`}
-        />
-        {amountInTRX && (
-          <TextGenerateEffect
-            words={`Current Contract Balance is ${contractBalance}`}
-          />
-        )}
-        {amountInJST && (
-          <TextGenerateEffect
-            words={`Current Contract Balance is ${contractBalance}`}
-          />
-        )}
+        {contractTRXBalance && <TextGenerateEffect
+          words={`Current Contract TRX is ${contractTRXBalance} TRX`}
+        />}
+        {contractJSTBalance && <TextGenerateEffect
+          words={`Current Contract JST is ${contractJSTBalance} JST`}
+        />}
       </div>
       <div className="px-4 md:px-[6rem]">
         <FeatureCards />
