@@ -10,6 +10,7 @@ import { FeatureCards } from "./utils";
 
 
 const Page = () => {
+
   const [contractBalance, setContractBalance] = useState(0);
   const [amountInTRX, setAmountInTRX] = useState(0);
   const [amountInJST, setAmountInJST] = useState(0);
@@ -40,7 +41,7 @@ const Page = () => {
         Lending Pool
       </div>
       <div className="px-4 md:px-[6rem]">
-        <TextGenerateEffect words={`Current Contract Balance is ${contractBalance} TRX` } />
+        <TextGenerateEffect words={`Current Contract Balance is ${contractBalance} TRX`} />
         {amountInTRX && <TextGenerateEffect words={`Current Contract Balance is ${contractBalance}`} />}
         {amountInJST && <TextGenerateEffect words={`Current Contract Balance is ${contractBalance}`} />}
       </div>
