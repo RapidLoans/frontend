@@ -16,15 +16,13 @@ import {
 import { WalletModalProvider } from "@tronweb3/tronwallet-adapter-react-ui";
 import { toast } from "sonner";
 import "@tronweb3/tronwallet-adapter-react-ui/style.css";
+import { ThemeProvider } from "next-themes";
+import Navbar from "@/components/Navbar/Navbar";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
-});
-
-const Navbar = dynamic(() => import("@/components/menu/Menu"), {
-  loading: () => <div>Loading...</div>,
 });
 
 // export const metadata: Metadata = {
@@ -47,15 +45,22 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} font-sans bg-black`}>
       <body>
-        <WalletProvider onError={onError}>
-          <WalletModalProvider>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Navbar />
-            </Suspense>
-            <main>{children}</main>
-            <Toaster />
-          </WalletModalProvider>
-        </WalletProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <WalletProvider onError={onError}>
+            <WalletModalProvider>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Navbar />
+              </Suspense>
+              <main>{children}</main>
+              <Toaster />
+            </WalletModalProvider>
+          </WalletProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

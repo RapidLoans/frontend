@@ -18,28 +18,16 @@ const menuLinks = [
     label: "HOME",
   },
   {
-    path: "/events",
-    label: "EVENTS",
+    path: "/lendingpool",
+    label: "LENDING POOL",
   },
   {
-    path: "/team",
-    label: "TEAM",
-  },
-  {
-    path: "/about",
-    label: "ABOUT US",
-  },
-  {
-    path: "/auth/login",
-    label: "LOGIN",
-  },
-  {
-    path: "/gallery",
-    label: "GALLERY",
+    path: "/flashloan",
+    label: "FLASH LOAN",
   },
 ];
 
-const Menu = () => {
+const Navbar = () => {
   const container = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const tl = useRef(gsap.timeline({ paused: true }));
@@ -169,4 +157,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default Navbar;
