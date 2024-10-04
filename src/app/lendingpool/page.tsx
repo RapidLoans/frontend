@@ -1,7 +1,22 @@
 "use client";
+import { FocusCards } from "@/components/Card";
 import React, { useContext, useEffect, useState } from "react";
-import LendingPool from "../(components)/LendingPool";
-import { BackgroundLines } from "@/components/BackgroundLines";
+
+export const cards = [
+  {
+    title: "Borrow",
+    src: "/images/borrow.jpg",
+  },
+  {
+    title: "Invest",
+    src: "/images/invest.png",
+  },
+  {
+    title: "FlashLoan",
+    src: "/images/flash-loan.jpg",
+  },
+];
+
 
 const page = () => {
     const [contractBalance, setContractBalance] = useState(0);
@@ -9,16 +24,14 @@ const page = () => {
     const [amountInJST, setAmountInJST] = useState(0);
 
   return(
-    <>
-          <BackgroundLines className="flex items-center justify-center w-full flex-col px-4">
-              <h2 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-neutral-900 to-neutral-700 dark:from-neutral-500 dark:to-white text-2xl md:text-4xl lg:text-8xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight">
-                  RapidLoans
-              </h2>
-              <p className="max-w-xl mx-auto text-sm md:text-xl text-neutral-700 dark:text-neutral-400 text-center">
-                  Borrow . Invest . Flash Loan
-              </p>
-          </BackgroundLines>
-    </>
+      <div className="min-h-[100vh] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex flex-col gap-10 justify-center">
+        {/* Radial gradient for the container to give a faded look */}
+        <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+        <div className=" mt-10 md:mt-24 text-4xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
+          Lending Pool
+        </div>
+      <FocusCards cards={cards} />;
+      </div>
   )
 };
 

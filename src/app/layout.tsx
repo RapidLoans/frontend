@@ -43,14 +43,9 @@ export default function RootLayout({
     } else toast.error(e.message);
   }
   return (
-    <html lang="en" className={`${inter.variable} font-sans bg-black`}>
+    <html lang="en" className={`${inter.variable} font-san dark:bg-black`}>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <WalletProvider onError={onError}>
             <WalletModalProvider>
               <Suspense fallback={<div>Loading...</div>}>
