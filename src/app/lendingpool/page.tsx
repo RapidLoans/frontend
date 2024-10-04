@@ -1,14 +1,36 @@
 "use client";
-import React, { useState } from "react";
-import { FeatureCards } from "./utils";
+import React, { useState, useEffect } from "react";
+import {
+  handleTRXInvestment,
+  handleJSTInvestment,
+  fetchContractBalance,
+} from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import { FeatureCards } from "./utils";
 
 
-
-const page = () => {
+const Page = () => {
   const [contractBalance, setContractBalance] = useState(0);
   const [amountInTRX, setAmountInTRX] = useState(0);
   const [amountInJST, setAmountInJST] = useState(0);
+
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        const x = await fetchContractBalance();
+        setContractBalance(x);
+
+        const y = await handleJSTInvestment();
+        setAmountInJST(y);
+
+        const z = await handleTRXInvestment();
+        setAmountInTRX(z);
+      } catch (error) {
+        console.error("Error fetching contract data:", error);
+      }
+    };
+    fetchAllData();
+  }, []);
 
   return (
     <div className="min-h-[100vh] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex flex-col gap-5 md:gap-10 justify-center">
@@ -26,7 +48,7 @@ const page = () => {
         <FeatureCards />
       </div>
     </div>
-  )
+  );
 };
 
-export default page;
+export default Page;

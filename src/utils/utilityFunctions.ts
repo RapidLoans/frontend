@@ -1,9 +1,7 @@
-"use client";
-import React, { useEffect, useState } from "react";
 import { CONTRACT_ADDRESS, LendingPoolABI } from "@/constants";
 
 // Function to get the TronWeb instance
-const getTronWeb = async () => {
+export const getTronWeb = async () => {
   if (typeof window.tronLink !== "undefined") {
     try {
       // Check if TronLink is ready and available
@@ -32,25 +30,25 @@ const getTronWeb = async () => {
   return null; // Return null if TronLink is not available or access is denied
 };
 
-const fetchContractBalance = async () => {
+export const fetchContractBalance = async () => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) {
     console.error("TronWeb instance not available");
-    return null;
+    return 0;
   }
 
   try {
-    const balanceInSun = await tronWeb.trx.getBalance(CONTRACT_ADDRESS);
+    const balanceInSun: number = await tronWeb.trx.getBalance(CONTRACT_ADDRESS);
     return balanceInSun;
   } catch (error) {
     console.error("Error fetching contract balance:", error);
-    return null;
+    return 0;
   }
 };
 
-const handleTRXInvestment = async () => {
+export const handleTRXInvestment = async () => {
   const tronWeb = await getTronWeb();
-  if (!tronWeb) return;
+  if (!tronWeb) return 0;
 
   try {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
@@ -61,12 +59,13 @@ const handleTRXInvestment = async () => {
     return dec;
   } catch (error) {
     console.error("Error in TRX investment transaction:", error);
+    return 0;
   }
 };
 
-const handleJSTInvestment = async () => {
+export const handleJSTInvestment = async () => {
   const tronWeb = await getTronWeb();
-  if (!tronWeb) return;
+  if (!tronWeb) return 0;
 
   try {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
@@ -77,10 +76,11 @@ const handleJSTInvestment = async () => {
     return dec;
   } catch (error) {
     console.error("Error in JST investment transaction:", error);
+    return 0;
   }
 };
 
-const InvestInTRX = async () => {
+export const InvestInTRX = async () => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) return;
 
@@ -93,6 +93,6 @@ const InvestInTRX = async () => {
   }
 };
 
-const BorrowFromContract = async () => {
+export const BorrowFromContract = async () => {
   // Need to make a smart contract function of transferring funds from contract to user
 };
