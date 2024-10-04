@@ -53,18 +53,81 @@ export const fetchContractTRXBalance = async () => {
   if (!tronWeb) return 0;
 
   try {
-    fetchContractBalance()
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
-    const tx = await myContract
-      .getContractJSTBalance()
-      .call();
-      console.log("tx",tx)
-    const hex = tx.balanceTRX?._hex;
-    const dec = parseInt(hex, 16);
+    const tx = await myContract.getContractTRXBalance().call();
+    console.log("tx:", tx);
+
+    const hex = tx._hex; 
+    const dec = parseInt(hex, 16); 
     console.log(`TRX Balance (decimal): ${dec}`);
+
     return dec;
   } catch (error) {
-    console.error("Error in TRX Balance :", error);
+    console.error("Error in fetching TRX Balance:", error);
+    return 0;
+  }
+};
+
+export const fetchContractJSTBalance = async () => {
+  const tronWeb = await getTronWeb();
+  if (!tronWeb) return 0;
+
+  try {
+    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const tx = await myContract.getContractJSTBalance().call();
+    console.log("tx:", tx);
+
+    const hex = tx._hex; 
+    const dec = parseInt(hex, 16); 
+    console.log(`JST Balance (decimal): ${dec}`);
+
+    return dec;
+  } catch (error) {
+    console.error("Error in fetching JST Balance:", error);
+    return 0;
+  }
+};
+
+export const fetchUserJSTBalance = async () => {
+  const tronWeb = await getTronWeb();
+  if (!tronWeb) return 0;
+
+  try {
+    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const tx = await myContract
+      .getUserJSTBalance(tronWeb.defaultAddress.base58)
+      .call();
+    console.log("tx:", tx);
+
+    const hex = tx._hex; 
+    const dec = parseInt(hex, 16); 
+    console.log(`JST Balance (decimal): ${dec}`);
+
+    return dec;
+  } catch (error) {
+    console.error("Error in fetching JST Balance:", error);
+    return 0;
+  }
+};
+
+export const fetchUserTRXBalance = async () => {
+  const tronWeb = await getTronWeb();
+  if (!tronWeb) return 0;
+
+  try {
+    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const tx = await myContract
+      .getUserTRXBalance(tronWeb.defaultAddress.base58)
+      .call();
+    console.log("tx:", tx);
+
+    const hex = tx._hex;
+    const dec = parseInt(hex, 16);
+    console.log(`TRX Balance (decimal): ${dec}`);
+
+    return dec;
+  } catch (error) {
+    console.error("Error in fetching TRX Balance:", error);
     return 0;
   }
 };
