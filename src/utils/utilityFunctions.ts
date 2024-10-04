@@ -52,10 +52,12 @@ export const handleTRXInvestment = async () => {
 
   try {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
-    const tx = await myContract.getInvestorStruct().call();
+    const tx = await myContract
+      .getInvestorStruct(tronWeb.defaultAddress.base58)
+      .call();
     const hex = tx.balanceTRX?._hex;
     const dec = parseInt(hex, 16);
-    console.log(`JST Balance (decimal): ${dec}`);
+    console.log(`TRX Balance (decimal): ${dec}`);
     return dec;
   } catch (error) {
     console.error("Error in TRX investment transaction:", error);
@@ -93,6 +95,18 @@ export const InvestInTRX = async () => {
   }
 };
 
+export const InvestInJST = async () => {
+  const tronWeb = await getTronWeb();
+  if (!tronWeb) return;
+
+  try {
+    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+
+    await myContract.addJST(1000).send();
+  } catch (error) {
+    console.error("Error in JST investment transaction:", error);
+  }
+};
 export const BorrowFromContract = async () => {
   // Need to make a smart contract function of transferring funds from contract to user
 };
