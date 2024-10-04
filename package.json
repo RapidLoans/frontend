@@ -15,7 +15,7 @@
     "@tronweb3/tronwallet-adapter-react-ui": "^1.1.9",
     "@tronweb3/tronwallet-adapters": "^1.2.4",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.11.0",
+    "framer-motion": "^11.11.1",
     "gsap": "^3.12.5",
     "lucide-react": "^0.447.0",
     "mini-svg-data-uri": "^1.4.4",
