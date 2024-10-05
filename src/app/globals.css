@@ -6,6 +6,18 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Remove spinner arrows in WebKit browsers (Chrome, Safari, etc.) */
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove spinner arrows in Firefox */
+.no-arrows[type="number"] {
+  -moz-appearance: textfield;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
