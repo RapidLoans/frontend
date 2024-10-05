@@ -157,23 +157,23 @@ const Page = () => {
           Lending Pool
         </div>
         <div className="px-4 md:px-[6rem]">
-          {contractTRXBalance && (
+          {contractTRXBalance > 0 && (
             <TextGenerateEffect
               words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
             />
           )}
-          {contractJSTBalance && (
+          {contractJSTBalance > 0 && (
             <TextGenerateEffect
               words={`Amount of JST in Liquidity Pool: ${contractJSTBalance} JST`}
             />
           )}
 
-          {UserTRXBalance && (
+          {UserTRXBalance > 0 && (
             <TextGenerateEffect
               words={`Your TRX Investment: ${UserTRXBalance} TRX`}
             />
           )}
-          {UserJSTBalance && (
+          {UserJSTBalance > 0 && (
             <TextGenerateEffect
               words={`Your JST Investment: ${UserJSTBalance} JST`}
             />
