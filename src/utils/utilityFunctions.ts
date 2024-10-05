@@ -152,15 +152,21 @@ export const InvestInTRX = async (val) => {
 export const InvestInJST = async (val) => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) return;
-
+  const valueInJSTTokens = BigInt(val * 1000000000000000000);
   try {
     const jst = await tronWeb.contract(JSTAbi, JST_CONTRACT_ADDRESS);
-    await jst.approve(CONTRACT_ADDRESS, val).send();
+    try {
+      await jst.approve(CONTRACT_ADDRESS, valueInJSTTokens).send();
+      const myContract = await tronWeb.contract(
+        LendingPoolABI,
+        CONTRACT_ADDRESS
+      );
 
-    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
-
-    const tx = await myContract.addJST(val).send();
-    return tx;
+      const tx = await myContract.addJST(valueInJSTTokens).send();
+      return tx;
+    } catch (error) {
+      console.error("Transaction Rejected by User", error);
+    }
   } catch (error) {
     console.error("Error in JST investment transaction:", error);
   }

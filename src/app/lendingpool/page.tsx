@@ -58,12 +58,11 @@ const Page = () => {
   }, []);
 
   const handleToast = () => {
-    toast.success("seccess",)
-    console.log("run")
-  }
+    toast.success("seccess");
+    console.log("run");
+  };
 
   useEffect(() => {
-    
     const hash = window.location.hash;
 
     if (hash === "#invest") {
@@ -101,7 +100,7 @@ const Page = () => {
     }
   };
 
-  const waitForTransactionConfirmation = async (txID:string) => {
+  const waitForTransactionConfirmation = async (txID: string) => {
     const interval = 3000;
     const maxAttempts = 80;
     const tronWeb = await getTronWeb();
@@ -135,7 +134,11 @@ const Page = () => {
             setTimeout(checkTransactionStatus, interval); // Wait and retry
           } else {
             setTransactionStatus("Transaction Failed");
-            reject(new Error("Transaction status not available after multiple attempts."));
+            reject(
+              new Error(
+                "Transaction status not available after multiple attempts."
+              )
+            );
           }
         } catch (error) {
           console.error("Error checking transaction status:", error);
@@ -213,9 +216,6 @@ const Page = () => {
             onClick={handleInvestment}
           >
             Invest in {investmentToken}
-          </button>
-          <button className="border border-white text-blac dark:text-white px-4 py-2 rounded-md">
-            Status: {transactionStatus}
           </button>
         </div>
       </div>
