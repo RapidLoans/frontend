@@ -84,59 +84,68 @@ const Page = () => {
     if (investmentToken === "TRX") {
       const trxTransactionId = await InvestInTRX(investmentAmount);
       console.log(trxTransactionId);
-      waitForTransactionConfirmation(trxTransactionId);
+
+      await toast.promise(waitForTransactionConfirmation(trxTransactionId), {
+        loading: "Waiting for TRX transaction confirmation...",
+        success: "TRX Transaction confirmed successfully!",
+        error: "TRX Transaction failed!",
+      });
     } else if (investmentToken === "JST") {
       const jstTransactionId = await InvestInJST(investmentAmount);
 
-      waitForTransactionConfirmation(jstTransactionId);
+      toast.promise(waitForTransactionConfirmation(jstTransactionId), {
+        loading: "Waiting for JST transaction confirmation...",
+        success: "JST Transaction confirmed successfully!",
+        error: "JST Transaction failed!",
+      });
     }
   };
 
-  const waitForTransactionConfirmation = async (txID) => {
+  const waitForTransactionConfirmation = async (txID:string) => {
     const interval = 3000;
     const maxAttempts = 80;
     const tronWeb = await getTronWeb();
 
     let attempts = 0;
 
-    // Polling function to check transaction status
-    const checkTransactionStatus = async () => {
-      try {
-        const transactionInfo = await tronWeb.trx.getTransactionInfo(txID);
+    return new Promise((resolve, reject) => {
+      const checkTransactionStatus = async () => {
+        try {
+          const transactionInfo = await tronWeb.trx.getTransactionInfo(txID);
 
-        if (transactionInfo && transactionInfo.receipt) {
-          const result = transactionInfo.receipt.result;
+          if (transactionInfo && transactionInfo.receipt) {
+            const result = transactionInfo.receipt.result;
 
-          if (result === "SUCCESS") {
-            console.log("Transaction succeeded:", transactionInfo);
-            setTransactionStatus("Success");
-            return transactionInfo; // Return success result
-          } else if (result === "FAILED") {
-            console.error("Transaction failed:", transactionInfo);
-            setTransactionStatus("Failed");
-            throw new Error("Transaction failed");
+            if (result === "SUCCESS") {
+              console.log("Transaction succeeded:", transactionInfo);
+              setTransactionStatus("Success");
+              resolve(transactionInfo); // Resolve on success
+            } else if (result === "FAILED") {
+              console.error("Transaction failed:", transactionInfo);
+              setTransactionStatus("Failed");
+              reject(new Error("Transaction failed")); // Reject on failure
+            }
+          } else {
+            console.log("Transaction is not yet confirmed.");
           }
-        } else {
-          console.log("Transaction is not yet confirmed.");
-        }
 
-        // Keep polling if transaction is not confirmed
-        if (attempts < maxAttempts) {
-          attempts++;
-          setTimeout(checkTransactionStatus, interval); // Wait and retry
-        } else {
-          setTransactionStatus("Transaction Failed");
-          throw new Error(
-            "Transaction status not available after multiple attempts."
-          );
+          // Keep polling if transaction is not confirmed
+          if (attempts < maxAttempts) {
+            attempts++;
+            setTimeout(checkTransactionStatus, interval); // Wait and retry
+          } else {
+            setTransactionStatus("Transaction Failed");
+            reject(new Error("Transaction status not available after multiple attempts."));
+          }
+        } catch (error) {
+          console.error("Error checking transaction status:", error);
+          reject(error); // Reject if there's an error
         }
-      } catch (error) {
-        console.error("Error checking transaction status:", error);
-      }
-    };
+      };
 
-    // Start polling
-    checkTransactionStatus();
+      // Start polling
+      checkTransactionStatus();
+    });
   };
 
   return (
