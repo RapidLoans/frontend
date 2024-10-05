@@ -62,9 +62,10 @@ export const fetchContractTRXBalance = async () => {
 
     const hex = tx._hex;
     const dec = parseInt(hex, 16);
-    console.log(`TRX Balance (decimal): ${dec}`);
+    const valueInTRX = dec / 100000;
+    console.log(`TRX Balance (decimal): ${valueInTRX}`);
 
-    return dec;
+    return valueInTRX;
   } catch (error) {
     console.error("Error in fetching TRX Balance:", error);
     return 0;
@@ -124,16 +125,17 @@ export const fetchUserTRXBalance = async () => {
 
     const hex = tx._hex;
     const dec = parseInt(hex, 16);
-    console.log(`User TRX Balance (decimal): ${dec}`);
+    const valueInTRX = dec / 100000;
+    console.log(`User TRX Balance (decimal): ${valueInTRX}`);
 
-    return dec;
+    return valueInTRX;
   } catch (error) {
     console.error("Error in fetching TRX Balance:", error);
     return 0;
   }
 };
 
-export const InvestInTRX = async (val:number) => {
+export const InvestInTRX = async (val: number) => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) return;
 
@@ -146,11 +148,11 @@ export const InvestInTRX = async (val:number) => {
     return tx;
   } catch (error) {
     console.error("Error in TRX investment transaction:", error);
-    return "declined"
+    return "declined";
   }
 };
 
-export const InvestInJST = async (val:number) => {
+export const InvestInJST = async (val: number) => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) return;
   const valueInJSTTokens = BigInt(val * 1000000000000000000);
