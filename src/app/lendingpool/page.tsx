@@ -7,6 +7,7 @@ import {
   fetchUserJSTBalance,
   fetchUserTRXBalance,
   InvestInTRX,
+  InvestInJST,
 } from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { FeatureCards } from "./utils";
@@ -70,8 +71,13 @@ const Page = () => {
   }, []);
 
   const handleInvestment = async () => {
-    const tx = await InvestInTRX();
-    console.log("tx in lending page", tx);
+    if (investmentToken === "TRX") {
+      const trxTransaction = await InvestInTRX();
+      console.log(trxTransaction);
+    } else if (investmentToken === "JST") {
+      const jstTransaction = await InvestInJST();
+      console.log(jstTransaction);
+    }
   };
 
   return (

@@ -141,7 +141,7 @@ export const InvestInTRX = async () => {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
 
     const tx = await myContract.addTRX().send({ callValue: 25 });
-    console.log("User add trx", tx);
+    return tx;
   } catch (error) {
     console.error("Error in TRX investment transaction:", error);
   }
@@ -153,12 +153,12 @@ export const InvestInJST = async () => {
 
   try {
     const jst = await tronWeb.contract(JSTAbi, JST_CONTRACT_ADDRESS);
-    const approveTx = await jst.approve(CONTRACT_ADDRESS, 35).send();
-    console.log(approveTx);
+    await jst.approve(CONTRACT_ADDRESS, 35).send();
+
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
 
     const tx = await myContract.addJST(35).send();
-    console.log(" JST investment tx", tx);
+    return tx;
   } catch (error) {
     console.error("Error in JST investment transaction:", error);
   }
