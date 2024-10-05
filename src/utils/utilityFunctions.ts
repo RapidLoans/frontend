@@ -125,7 +125,7 @@ export const fetchUserTRXBalance = async () => {
     const hex = tx._hex;
     const dec = parseInt(hex, 16);
     console.log(`User TRX Balance (decimal): ${dec}`);
-    
+
     return dec;
   } catch (error) {
     console.error("Error in fetching TRX Balance:", error);
@@ -153,8 +153,12 @@ export const InvestInJST = async () => {
 
   try {
     const jst = await tronWeb.contract(JSTAbi, JST_CONTRACT_ADDRESS);
-    const txid = await jst.approve(100000).send();
-    console.log(" JST investment txid", txid);
+    const approveTx = await jst.approve(CONTRACT_ADDRESS, 35).send();
+    console.log(approveTx);
+    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+
+    const tx = await myContract.addJST(35).send();
+    console.log(" JST investment tx", tx);
   } catch (error) {
     console.error("Error in JST investment transaction:", error);
   }

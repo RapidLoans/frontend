@@ -1,5 +1,5 @@
 export const CONTRACT_ADDRESS = "TVQFYdkqmz7krjq85YjBXzn5jTBpGyeuqN";
-export const JST_CONTRACT_ADDRESS = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+export const JST_CONTRACT_ADDRESS = "TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3";
 export const LendingPoolABI = [
   {
     inputs: [],

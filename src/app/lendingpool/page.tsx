@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { CONTRACT_ADDRESS } from "@/constants";
 import {
   getTronWeb,
   fetchContractJSTBalance,
@@ -29,7 +28,7 @@ const Page = () => {
         setContractJSTBalance(contract_JST);
 
         const user_TRX = await fetchUserTRXBalance();
-        console.log("user Trx", user_TRX)
+        console.log("user Trx", user_TRX);
         setUserTRXBalance(user_TRX);
 
         const user_JST = await fetchUserJSTBalance();
@@ -74,12 +73,6 @@ const Page = () => {
       <div className="px-4 md:px-[6rem]">
         <FeatureCards />
       </div>
-      <button
-        className="bg-white bg-yellow-300 text-black dark:text-white px-4 py-2 rounded-full"
-        onClick={InvestInTRX}
-      >
-        Invest in trx
-      </button>
     </div>
   );
 };
