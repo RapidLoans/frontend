@@ -84,6 +84,11 @@ const Page = () => {
       const trxTransactionId = await InvestInTRX(investmentAmount);
       console.log(trxTransactionId);
 
+      if (trxTransactionId === "declined") {
+        toast.error("Confirmation declined by user")
+        return
+      }
+
       await toast.promise(waitForTransactionConfirmation(trxTransactionId), {
         loading: "Waiting for TRX transaction confirmation...",
         success: "TRX Transaction confirmed successfully!",
@@ -91,12 +96,15 @@ const Page = () => {
       });
     } else if (investmentToken === "JST") {
       const jstTransactionId = await InvestInJST(investmentAmount);
-
-      toast.promise(waitForTransactionConfirmation(jstTransactionId), {
-        loading: "Waiting for JST transaction confirmation...",
-        success: "JST Transaction confirmed successfully!",
-        error: "JST Transaction failed!",
-      });
+      if (jstTransactionId === "declined"){
+        toast.error("Confirmation declined by user")
+        return
+      }
+        toast.promise(waitForTransactionConfirmation(jstTransactionId), {
+          loading: "Waiting for JST transaction confirmation...",
+          success: "JST Transaction confirmed successfully!",
+          error: "JST Transaction failed!",
+        });
     }
   };
 

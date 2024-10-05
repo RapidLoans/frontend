@@ -133,7 +133,7 @@ export const fetchUserTRXBalance = async () => {
   }
 };
 
-export const InvestInTRX = async (val) => {
+export const InvestInTRX = async (val:number) => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) return;
 
@@ -146,10 +146,11 @@ export const InvestInTRX = async (val) => {
     return tx;
   } catch (error) {
     console.error("Error in TRX investment transaction:", error);
+    return "declined"
   }
 };
 
-export const InvestInJST = async (val) => {
+export const InvestInJST = async (val:number) => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) return;
   const valueInJSTTokens = BigInt(val * 1000000000000000000);
@@ -166,9 +167,11 @@ export const InvestInJST = async (val) => {
       return tx;
     } catch (error) {
       console.error("Transaction Rejected by User", error);
+      return "declined";
     }
   } catch (error) {
     console.error("Error in JST investment transaction:", error);
+    return "declined";
   }
 };
 export const BorrowFromContract = async () => {
