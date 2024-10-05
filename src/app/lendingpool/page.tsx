@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 import {
   fetchContractJSTBalance,
   fetchContractTRXBalance,
@@ -16,7 +16,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 const Page = () => {
   const [contractJSTBalance, setContractJSTBalance] = useState(0);
@@ -24,8 +24,8 @@ const Page = () => {
   const [UserTRXBalance, setUserTRXBalance] = useState(0);
   const [UserJSTBalance, setUserJSTBalance] = useState(0);
 
-  const [investmentToken, setInvestmentToken] = useState<string>("TRX")
-  const [investmentAmount, setInvestmentAmount] = useState<number>(0)
+  const [investmentToken, setInvestmentToken] = useState<string>("TRX");
+  const [investmentAmount, setInvestmentAmount] = useState<number>(0);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -37,7 +37,7 @@ const Page = () => {
         setContractJSTBalance(contract_JST);
 
         const user_TRX = await fetchUserTRXBalance();
-        console.log("user Trx", user_TRX)
+        console.log("user Trx", user_TRX);
         setUserTRXBalance(user_TRX);
 
         const user_JST = await fetchUserJSTBalance();
@@ -62,8 +62,8 @@ const Page = () => {
 
   const handleInvestment = async () => {
     const tx = await InvestInTRX();
-    console.log("tx in lending page", tx)
-  }
+    console.log("tx in lending page", tx);
+  };
 
   return (
     <div className="bg-white dark:bg-black flex flex-col">
@@ -100,7 +100,10 @@ const Page = () => {
           <FeatureCards />
         </div>
       </div>
-      <div className="bg-white dark:bg-black py-[8rem] md:py-[10rem] lg:py-[12rem]" id="invest">
+      <div
+        className="bg-white dark:bg-black py-[8rem] md:py-[10rem] lg:py-[12rem]"
+        id="invest"
+      >
         <div className="text-5xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
           Invest In Lending Pool
         </div>
@@ -114,7 +117,12 @@ const Page = () => {
               <SelectItem value="JST">JST</SelectItem>
             </SelectContent>
           </Select>
-          <Input type="number" min={0} placeholder="Invest Amount" className="w-full border-white min-h-10 no-arrows" />
+          <Input
+            type="number"
+            min={0}
+            placeholder="Invest Amount"
+            className="w-full border-white min-h-10 no-arrows"
+          />
           <button
             className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
             onClick={handleInvestment}
