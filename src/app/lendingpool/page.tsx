@@ -123,6 +123,32 @@ const Page = () => {
           </button>
         </div>
       </div>
+      <div className="bg-white flex flex-col gap-8 dark:bg-black py-[8rem] md:py-[10rem] lg:py-[12rem]" id="borrow">
+        <div className="text-5xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
+          Borrow From Lending Pool
+        </div>
+        <div className="text-2xl sm:text-3xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
+          Current Interest 7% APY
+        </div>
+        <div className="w-full px-4 md:px-[12rem] lg:px-[20rem] flex flex-col gap-4 text-black dark:text-white">
+          <Select value={investmentToken} onValueChange={setInvestmentToken}>
+            <SelectTrigger className="w-full border-white min-h-10">
+              <SelectValue placeholder="Select Token" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="TRX">TRX</SelectItem>
+              <SelectItem value="JST">JST</SelectItem>
+            </SelectContent>
+          </Select>
+          <Input type="number" min={0} placeholder="Invest Amount" className="w-full border-white min-h-10 no-arrows" />
+          <button
+            className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
+            onClick={handleInvestment}
+          >
+            Borrow
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
