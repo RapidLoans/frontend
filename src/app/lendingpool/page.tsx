@@ -7,6 +7,7 @@ import {
   fetchUserJSTBalance,
   fetchUserTRXBalance,
   InvestInTRX,
+  InvestInJST,
 } from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { FeatureCards } from "./utils";
@@ -61,8 +62,13 @@ const Page = () => {
   }, []);
 
   const handleInvestment = async () => {
-    const tx = await InvestInTRX();
-    console.log("tx in lending page", tx);
+    if (investmentToken === "TRX") {
+      const trxTransaction = await InvestInTRX();
+      console.log(trxTransaction);
+    } else if (investmentToken === "JST") {
+      const jstTransaction = await InvestInJST();
+      console.log(jstTransaction);
+    }
   };
 
   return (
@@ -131,7 +137,10 @@ const Page = () => {
           </button>
         </div>
       </div>
-      <div className="bg-white flex flex-col gap-8 dark:bg-black py-[8rem] md:py-[10rem] lg:py-[12rem]" id="borrow">
+      <div
+        className="bg-white flex flex-col gap-8 dark:bg-black py-[8rem] md:py-[10rem] lg:py-[12rem]"
+        id="borrow"
+      >
         <div className="text-5xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
           Borrow From Lending Pool
         </div>
@@ -148,7 +157,12 @@ const Page = () => {
               <SelectItem value="JST">JST</SelectItem>
             </SelectContent>
           </Select>
-          <Input type="number" min={0} placeholder="Invest Amount" className="w-full border-white min-h-10 no-arrows" />
+          <Input
+            type="number"
+            min={0}
+            placeholder="Invest Amount"
+            className="w-full border-white min-h-10 no-arrows"
+          />
           <button
             className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
             onClick={handleInvestment}
