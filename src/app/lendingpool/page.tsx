@@ -29,6 +29,7 @@ const Page = () => {
         setContractJSTBalance(contract_JST);
 
         const user_TRX = await fetchUserTRXBalance();
+        console.log("user Trx", user_TRX)
         setUserTRXBalance(user_TRX);
 
         const user_JST = await fetchUserJSTBalance();
@@ -59,12 +60,12 @@ const Page = () => {
           />
         )}
 
-        {contractTRXBalance && (
+        {UserTRXBalance && (
           <TextGenerateEffect
             words={`Your TRX Investment: ${UserTRXBalance} TRX`}
           />
         )}
-        {contractJSTBalance && (
+        {UserJSTBalance && (
           <TextGenerateEffect
             words={`Your JST Investment: ${UserJSTBalance} JST`}
           />

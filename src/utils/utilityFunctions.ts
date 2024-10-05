@@ -125,7 +125,7 @@ export const fetchUserTRXBalance = async () => {
     const hex = tx._hex;
     const dec = parseInt(hex, 16);
     console.log(`User TRX Balance (decimal): ${dec}`);
-
+    
     return dec;
   } catch (error) {
     console.error("Error in fetching TRX Balance:", error);
