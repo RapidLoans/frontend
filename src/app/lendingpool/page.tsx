@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 const Page = () => {
   const [contractJSTBalance, setContractJSTBalance] = useState(0);
@@ -53,7 +54,13 @@ const Page = () => {
     fetchAllData();
   }, []);
 
+  const handleToast = () => {
+    toast.success("seccess",)
+    console.log("run")
+  }
+
   useEffect(() => {
+    
     const hash = window.location.hash;
 
     if (hash === "#invest") {

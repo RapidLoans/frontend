@@ -1,4 +1,4 @@
-import { BackgroundLines } from "@/components/ui/BackgroundLines";
+import { BackgroundLines } from "@/components/ui/backgroundLines";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import Link from "next/link";
 

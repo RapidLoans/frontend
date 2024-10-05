@@ -1,6 +1,5 @@
 "use client"
 import { Suspense } from "react";
-import { Toaster } from "@/components/ui/sonner";
 import {
     WalletProvider,
 } from "@tronweb3/tronwallet-adapter-react-hooks";
@@ -32,7 +31,6 @@ export default function Application({
                     <Navbar />
                 </Suspense>
                 <main>{children}</main>
-                <Toaster />
             </WalletModalProvider>
         </WalletProvider>
     )

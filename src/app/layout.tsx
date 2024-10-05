@@ -4,6 +4,7 @@ import "@tronweb3/tronwallet-adapter-react-ui/style.css";
 import { ThemeProvider } from "next-themes";
 import { Metadata } from "next";
 import  Application  from "@/app/Application"
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Application>
             {children}
+            <Toaster expand/>
           </Application>
         </ThemeProvider>
       </body>
