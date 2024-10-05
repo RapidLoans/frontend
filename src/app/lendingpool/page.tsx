@@ -26,9 +26,6 @@ const Page = () => {
   const [contractTRXBalance, setContractTRXBalance] = useState(0);
   const [UserTRXBalance, setUserTRXBalance] = useState(0);
   const [UserJSTBalance, setUserJSTBalance] = useState(0);
-  const [transactionStatus, setTransactionStatus] = useState<string>(
-    "Transaction Not Started"
-  );
   const [investmentToken, setInvestmentToken] = useState<string>("TRX");
   const [investmentAmount, setInvestmentAmount] = useState<number>(0);
 
@@ -56,11 +53,6 @@ const Page = () => {
     };
     fetchAllData();
   }, []);
-
-  const handleToast = () => {
-    toast.success("seccess");
-    console.log("run");
-  };
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -125,11 +117,9 @@ const Page = () => {
 
             if (result === "SUCCESS") {
               console.log("Transaction succeeded:", transactionInfo);
-              setTransactionStatus("Success");
               resolve(transactionInfo); // Resolve on success
             } else if (result === "FAILED") {
               console.error("Transaction failed:", transactionInfo);
-              setTransactionStatus("Failed");
               reject(new Error("Transaction failed")); // Reject on failure
             }
           } else {
@@ -141,7 +131,6 @@ const Page = () => {
             attempts++;
             setTimeout(checkTransactionStatus, interval); // Wait and retry
           } else {
-            setTransactionStatus("Transaction Failed");
             reject(
               new Error(
                 "Transaction status not available after multiple attempts."
