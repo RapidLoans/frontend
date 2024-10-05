@@ -1,6 +1,9 @@
-import { CONTRACT_ADDRESS, LendingPoolABI } from "@/constants";
-import { txCheckWithArgs } from "tronweb/utils";
-
+import {
+  CONTRACT_ADDRESS,
+  LendingPoolABI,
+  JSTAbi,
+  JST_CONTRACT_ADDRESS,
+} from "@/constants";
 // Function to get the TronWeb instance
 export const getTronWeb = async () => {
   if (typeof window.tronLink !== "undefined") {
@@ -40,7 +43,7 @@ export const fetchContractBalance = async () => {
 
   try {
     const balanceInSun: number = await tronWeb.trx.getBalance(CONTRACT_ADDRESS);
-    console.log("balance",balanceInSun);
+    console.log("balance", balanceInSun);
     return balanceInSun;
   } catch (error) {
     console.error("Error fetching contract balance:", error);
@@ -57,8 +60,8 @@ export const fetchContractTRXBalance = async () => {
     const tx = await myContract.getContractTRXBalance().call();
     console.log("tx:", tx);
 
-    const hex = tx._hex; 
-    const dec = parseInt(hex, 16); 
+    const hex = tx._hex;
+    const dec = parseInt(hex, 16);
     console.log(`TRX Balance (decimal): ${dec}`);
 
     return dec;
@@ -77,8 +80,8 @@ export const fetchContractJSTBalance = async () => {
     const tx = await myContract.getContractJSTBalance().call();
     console.log("tx:", tx);
 
-    const hex = tx._hex; 
-    const dec = parseInt(hex, 16); 
+    const hex = tx._hex;
+    const dec = parseInt(hex, 16);
     console.log(`JST Balance (decimal): ${dec}`);
 
     return dec;
@@ -97,11 +100,10 @@ export const fetchUserJSTBalance = async () => {
     const tx = await myContract
       .getUserJSTBalance(tronWeb.defaultAddress.base58)
       .call();
-    console.log("tx:", tx);
 
-    const hex = tx._hex; 
-    const dec = parseInt(hex, 16); 
-    console.log(`JST Balance (decimal): ${dec}`);
+    const hex = tx._hex;
+    const dec = parseInt(hex, 16);
+    console.log(`USER JST Balance (decimal): ${dec}`);
 
     return dec;
   } catch (error) {
@@ -119,53 +121,14 @@ export const fetchUserTRXBalance = async () => {
     const tx = await myContract
       .getUserTRXBalance(tronWeb.defaultAddress.base58)
       .call();
-    console.log("tx:", tx);
 
     const hex = tx._hex;
     const dec = parseInt(hex, 16);
-    console.log(`TRX Balance (decimal): ${dec}`);
+    console.log(`User TRX Balance (decimal): ${dec}`);
 
     return dec;
   } catch (error) {
     console.error("Error in fetching TRX Balance:", error);
-    return 0;
-  }
-};
-
-export const handleTRXInvestment = async () => {
-  const tronWeb = await getTronWeb();
-  if (!tronWeb) return 0;
-
-  try {
-    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
-    const str: string = tronWeb.defaultAddress.base58;
-    const tx = await myContract.getInvestorStruct(str).call();
-    const hex = tx.balanceTRX?._hex;
-    const dec = parseInt(hex, 16);
-    console.log(`TRX Balance (decimal): ${dec}`);
-    return dec;
-  } catch (error) {
-    console.error("Error in TRX Balance :", error);
-    return 0;
-  }
-};
-
-export const handleJSTInvestment = async () => {
-  const tronWeb = await getTronWeb();
-  if (!tronWeb) return 0;
-
-  try {
-    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
-    const tx = await myContract
-      .getInvestorStruct(tronWeb.defaultAddress.base58)
-      .call();
-    console.log("tx", tx)
-    const hex = tx.balanceJST?._hex;
-    const dec = parseInt(hex, 16);
-    console.log(`JST Balance (decimal): ${dec}`);
-    return dec;
-  } catch (error) {
-    console.error("Error in JST Balance :", error);
     return 0;
   }
 };
@@ -177,7 +140,8 @@ export const InvestInTRX = async () => {
   try {
     const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
 
-    await myContract.addTRX().send({ callValue: 2000 });
+    const tx = await myContract.addTRX().send({ callValue: 25 });
+    console.log("User add trx", tx);
   } catch (error) {
     console.error("Error in TRX investment transaction:", error);
   }
@@ -188,13 +152,9 @@ export const InvestInJST = async () => {
   if (!tronWeb) return;
 
   try {
-    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
-    const approveTx = await myContract.approve(CONTRACT_ADDRESS, 1000).send();
-
-    if (approveTx) {
-      await myContract.addJST(1000).send();
-      console.log("Transaction successful");
-    }
+    const jst = await tronWeb.contract(JSTAbi, JST_CONTRACT_ADDRESS);
+    const txid = await jst.approve(100000).send();
+    console.log(" JST investment txid", txid);
   } catch (error) {
     console.error("Error in JST investment transaction:", error);
   }

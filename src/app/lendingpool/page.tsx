@@ -1,35 +1,38 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
+import { CONTRACT_ADDRESS } from "@/constants";
 import {
+  getTronWeb,
   fetchContractJSTBalance,
   fetchContractTRXBalance,
   fetchUserJSTBalance,
   fetchUserTRXBalance,
+  InvestInTRX,
+  InvestInJST,
 } from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { FeatureCards } from "./utils";
 
 const Page = () => {
-  const [contractJSTBalance, setContractJSTBalance] = useState(0)
-  const [contractTRXBalance, setContractTRXBalance] = useState(0)
+  const [contractJSTBalance, setContractJSTBalance] = useState(0);
+  const [contractTRXBalance, setContractTRXBalance] = useState(0);
   const [UserTRXBalance, setUserTRXBalance] = useState(0);
   const [UserJSTBalance, setUserJSTBalance] = useState(0);
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const contract_TRX = await fetchContractTRXBalance()
-        setContractTRXBalance(contract_TRX)
-        
-        const contract_JST = await fetchContractJSTBalance()
-        setContractJSTBalance(contract_JST)
+        const contract_TRX = await fetchContractTRXBalance();
+        setContractTRXBalance(contract_TRX);
 
-        const user_TRX = await fetchUserTRXBalance()
-        setUserTRXBalance(user_TRX)
+        const contract_JST = await fetchContractJSTBalance();
+        setContractJSTBalance(contract_JST);
 
-        const user_JST = await fetchUserJSTBalance()
-        setUserJSTBalance(user_JST)
+        const user_TRX = await fetchUserTRXBalance();
+        setUserTRXBalance(user_TRX);
 
+        const user_JST = await fetchUserJSTBalance();
+        setUserJSTBalance(user_JST);
       } catch (error) {
         console.error("Error fetching contract data:", error);
       }
@@ -45,23 +48,37 @@ const Page = () => {
         Lending Pool
       </div>
       <div className="px-4 md:px-[6rem]">
-        {contractTRXBalance && <TextGenerateEffect
-          words={`Current Contract TRX is ${contractTRXBalance} TRX`}
-        />}
-        {contractJSTBalance && <TextGenerateEffect
-          words={`Current Contract JST is ${contractJSTBalance} JST`}
-        />}
+        {contractTRXBalance && (
+          <TextGenerateEffect
+            words={`Amount of TRX in liquidity pool: ${contractTRXBalance} TRX`}
+          />
+        )}
+        {contractJSTBalance && (
+          <TextGenerateEffect
+            words={`Amount of JST in liquidity pool: ${contractJSTBalance} JST`}
+          />
+        )}
 
-        {contractTRXBalance && <TextGenerateEffect
-          words={`Your TRX Investment is ${UserTRXBalance} TRX`}
-        />}
-        {contractJSTBalance && <TextGenerateEffect
-          words={`Your JST Investment is ${UserJSTBalance} JST`}
-        />}
+        {contractTRXBalance && (
+          <TextGenerateEffect
+            words={`Your TRX Investment: ${UserTRXBalance} TRX`}
+          />
+        )}
+        {contractJSTBalance && (
+          <TextGenerateEffect
+            words={`Your JST Investment: ${UserJSTBalance} JST`}
+          />
+        )}
       </div>
       <div className="px-4 md:px-[6rem]">
         <FeatureCards />
       </div>
+      <button
+        className="bg-white bg-yellow-300 text-black dark:text-white px-4 py-2 rounded-full"
+        onClick={InvestInTRX}
+      >
+        Invest in trx
+      </button>
     </div>
   );
 };

@@ -20,7 +20,9 @@ export const FeatureCard = ({
           <div className="flex justify-center items-center w-14 h-14 bg-gray-700 bg-opacity-60 rounded-full mb-4">
             <Icon className="text-purple-300" size={25} />
           </div>
-          <h3 className="text-black dark:text-white text-xl font-semibold mb-3">{title}</h3>
+          <h3 className="text-black dark:text-white text-xl font-semibold mb-3">
+            {title}
+          </h3>
           <p className="text-black  dark:text-gray-300">{description}</p>
         </div>
       </Link>
@@ -34,13 +36,13 @@ export const FeatureCards = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         <FeatureCard
           title="Invest"
-          description="Invest in lending pool using TRS and JST coins"
+          description="Invest in lending pool using TRX and JST coins"
           icon={Bitcoin}
           link={"/lendingpool#invest"}
         />
         <FeatureCard
           title="Borrow"
-          description="Borrow TRS and JST coins securely"
+          description="Borrow TRX and JST coins securely"
           icon={HandCoins}
           link={"/lendingpool#borrow"}
         />
