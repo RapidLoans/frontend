@@ -62,7 +62,7 @@ export const fetchContractTRXBalance = async () => {
 
     const hex = tx._hex;
     const dec = parseInt(hex, 16);
-    const valueInTRX = dec / 100000;
+    const valueInTRX = dec / 1000000;
     console.log(`TRX Balance (decimal): ${valueInTRX}`);
 
     return valueInTRX;
@@ -83,9 +83,10 @@ export const fetchContractJSTBalance = async () => {
 
     const hex = tx._hex;
     const dec = parseInt(hex, 16);
-    console.log(`JST Balance (decimal): ${dec}`);
+    const valueInJST = dec / 1000000000000000000;
+    console.log(`JST Balance (decimal): ${valueInJST}`);
 
-    return dec;
+    return valueInJST;
   } catch (error) {
     console.error("Error in fetching JST Balance:", error);
     return 0;
@@ -104,9 +105,10 @@ export const fetchUserJSTBalance = async () => {
 
     const hex = tx._hex;
     const dec = parseInt(hex, 16);
-    console.log(`USER JST Balance (decimal): ${dec}`);
+    const valueInJST = dec / 1000000000000000000;
+    console.log(`USER JST Balance (decimal): ${valueInJST}`);
 
-    return dec;
+    return valueInJST;
   } catch (error) {
     console.error("Error in fetching JST Balance:", error);
     return 0;
@@ -125,7 +127,7 @@ export const fetchUserTRXBalance = async () => {
 
     const hex = tx._hex;
     const dec = parseInt(hex, 16);
-    const valueInTRX = dec / 100000;
+    const valueInTRX = dec / 1000000;
     console.log(`User TRX Balance (decimal): ${valueInTRX}`);
 
     return valueInTRX;
