@@ -9,8 +9,9 @@ export default function Home() {
         RapidLoans
       </h2>
       <div className="max-w-xl mx-auto text-sm md:text-xl text-neutral-700 dark:text-neutral-400 text-center">
-        Borrow. Invest. Flash Loans. Powered by Tron.
+        Borrow. Invest. Flash Loans.
       </div>
+      
       <div className="flex gap-4 mt-6">
         <Link href={"/lendingpool"}>
           <HoverBorderGradient
@@ -23,7 +24,7 @@ export default function Home() {
           </HoverBorderGradient>
         </Link>
 
-        <Link href={"/lendingpool"}>
+        <Link href={"/flashloan"}>
           <HoverBorderGradient
             containerClassName="rounded-full"
             as="button"
@@ -33,6 +34,9 @@ export default function Home() {
             <span>Flash Loan</span>
           </HoverBorderGradient>
         </Link>
+      </div>
+      <div className="absolute bottom-4 mx-auto max-w-xl text-sm md:text-lg text-neutral-700 dark:text-neutral-400 text-center">
+        Powered by Tron.
       </div>
     </BackgroundLines>
   );

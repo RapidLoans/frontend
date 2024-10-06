@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   
   return (
-    <html lang="en" className={`${inter.variable} font-san dark:bg-black`}>
+    <html lang="en" className={`${inter.variable} font-san bg-black dark:bg-black`}>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Application>

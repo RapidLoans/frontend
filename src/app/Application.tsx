@@ -30,7 +30,7 @@ export default function Application({
                 <Suspense fallback={<div>Loading...</div>}>
                     <Navbar />
                 </Suspense>
-                <main>{children}</main>
+                <main className="bg-white dark:bg-black">{children}</main>
             </WalletModalProvider>
         </WalletProvider>
     )
