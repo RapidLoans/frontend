@@ -18,7 +18,7 @@ const FlashLoan = () => {
                             <div className="text-4xl sm:text-5xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">
                                 {item.title}
                             </div>
-                             
+
                             <div className="text-sm md:text-[20px] leading-7 text-neutral-700 dark:text-neutral-400">
                                 {item.description}
                             </div>
@@ -52,9 +52,9 @@ const dummyContent = [
         title: "How Flash Loans Work",
         description: (
             <>
-                <p>Flash loans operate within a single blockchain transaction. Here's how it works step by step:</p>
+                <p>Flash loans operate within a single blockchain transaction. Here&apos;s how it works step by step:</p>
                 <ul>
-                    <br /> 
+                    <br />
                     <li>• Your smart contract requests a loan from the Pool contract, specifying the asset and amount.</li>
                     <li>• The Pool transfers the requested asset to your contract after performing some checks.</li>
                     <li>• Your contract can now use the loaned funds for any operation, such as arbitrage or liquidation.</li>
