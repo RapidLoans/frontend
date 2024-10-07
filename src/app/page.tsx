@@ -11,7 +11,7 @@ export default function Home() {
       <div className="max-w-xl mx-auto text-sm md:text-xl text-neutral-700 dark:text-neutral-400 text-center">
         Borrow. Invest. Flash Loans.
       </div>
-      
+
       <div className="flex gap-4 mt-6">
         <Link href={"/lendingpool"}>
           <HoverBorderGradient
@@ -20,7 +20,7 @@ export default function Home() {
             className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
           >
             {/* <AceternityLogo /> */}
-            <span>Explore Lending Pool</span>
+            <span>Explore Liquidity Pool</span>
           </HoverBorderGradient>
         </Link>
 
@@ -31,12 +31,12 @@ export default function Home() {
             className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
           >
             {/* <AceternityLogo /> */}
-            <span>Flash Loan</span>
+            <span>Flash Loans</span>
           </HoverBorderGradient>
         </Link>
       </div>
       <div className="absolute bottom-4 mx-auto max-w-xl text-sm md:text-lg text-neutral-700 dark:text-neutral-400 text-center">
-        Powered by Tron.
+        Powered by the Tron Blockchain.
       </div>
     </BackgroundLines>
   );

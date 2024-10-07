@@ -36,7 +36,7 @@ export const FeatureCards = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         <FeatureCard
           title="Invest"
-          description="Invest in lending pool using TRX and JST coins"
+          description="Invest in liquidity pool using TRX and JST coins"
           icon={Bitcoin}
           link={"/lendingpool#invest"}
         />

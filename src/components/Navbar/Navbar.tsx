@@ -19,12 +19,13 @@ const menuLinks = [
   },
   {
     path: "/lendingpool",
-    label: "LENDING POOL",
+    label: "LIQUIDITY POOL",
   },
   {
     path: "/flashloan",
     label: "FLASH LOAN",
   },
+  { path: "/addressbook", label: "ADDRESS BOOK" },
 ];
 
 const Navbar = () => {

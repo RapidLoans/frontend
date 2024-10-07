@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { TracingBeam } from "@/components/ui/tracing-bean";
+import Image from "next/image";
 
 const FlashLoan = () => {
   return (
@@ -44,9 +45,9 @@ const dummyContent = [
         <br />
         <p>
           If you don’t manage to repay in time, no worries—the entire
-          transaction is canceled as if it never happened. This powerful tool is
-          designed for developers who are well-versed in the Ethereum Virtual
-          Machine (EVM) and smart contracts.
+          transaction is canceled/reverted to initial state as if it never
+          happened. This powerful tool is designed for developers who are
+          well-versed in the Ethereum Virtual Machine (EVM) and smart contracts.
         </p>
         <br />
       </>
@@ -64,8 +65,9 @@ const dummyContent = [
         <ul>
           <br />
           <li>
-            • Your smart contract requests a loan from the LiquidityPool,
-            specifying the asset and amount.
+            • Your smart contract requests a loan from the RapidLoansCore
+            contract which pulls funds from the liquidity pool, specifying the
+            asset and amount.
           </li>
           <li>
             • The Pool transfers the requested asset to your contract after
@@ -79,7 +81,10 @@ const dummyContent = [
             • After your operation is complete, you must repay the loan with a
             fee back to the Pool.
           </li>
-          <li>• If you fail to repay, the entire transaction is reverted</li>
+          <li>
+            • If you fail to repay, the entire transaction is reverted to the
+            initial state.
+          </li>
         </ul>
         <br />
       </>
@@ -103,6 +108,13 @@ const dummyContent = [
             </code>
             , which you&apos;ll find in the RapidLoans GitHub repository. This
             is your starting point to tap into the Rapid Loans magic.
+            <Image
+              src="/flashloansone.png"
+              className="p-8"
+              alt="flash loans"
+              width={800}
+              height={500}
+            />
           </li>
           <li>
             • Next, you&apos;ll need to interact with the RapidLoansCore
@@ -110,7 +122,19 @@ const dummyContent = [
             <code className="bg-gray-800 text-white px-2 py-1 rounded-md">
               RapidLoansCore
             </code>{" "}
-            address, which is present in address book in the website.
+            address and{" "}
+            <code className="bg-gray-800 text-white px-2 py-1 rounded-md">
+              IRapidLoansCore
+            </code>{" "}
+            interface which is present in address book and RapidLoans/contracts
+            repo.
+            <Image
+              src="/flashloanstwo.png"
+              className="p-8"
+              alt="flash loans"
+              width={800}
+              height={500}
+            />
           </li>
           <li>
             • Call the{" "}
@@ -131,9 +155,14 @@ const dummyContent = [
             repay the loan, plus the fee.
           </li>
           <li>
-            • The process is the same, just swap out TRX functions for JST ones.
-            We highly recommend giving it a test run on the TRON IDE before
-            taking it on-chain.
+            • Checkout a Subject contract, available in the RapidLoans/contracts
+            repo too, that is an example of a customer contract using
+            RapidLoans. You can also try it yourself on the TronIde.
+          </li>
+          <li>
+            • The process for JST is the same, just swap out TRX functions for
+            JST ones. We highly recommend giving it a test run on the TRON IDE
+            before taking it on-chain.
           </li>
         </ul>
         <br />

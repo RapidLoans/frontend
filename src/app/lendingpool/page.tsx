@@ -77,8 +77,8 @@ const Page = () => {
       console.log(trxTransactionId);
 
       if (trxTransactionId === "declined") {
-        toast.error("Confirmation declined by user")
-        return
+        toast.error("Confirmation declined by user");
+        return;
       }
 
       await toast.promise(waitForTransactionConfirmation(trxTransactionId), {
@@ -88,15 +88,15 @@ const Page = () => {
       });
     } else if (investmentToken === "JST") {
       const jstTransactionId = await InvestInJST(investmentAmount);
-      if (jstTransactionId === "declined"){
-        toast.error("Confirmation declined by user")
-        return
+      if (jstTransactionId === "declined") {
+        toast.error("Confirmation declined by user");
+        return;
       }
-        toast.promise(waitForTransactionConfirmation(jstTransactionId), {
-          loading: "Waiting for JST transaction confirmation...",
-          success: "JST Transaction confirmed successfully!",
-          error: "JST Transaction failed!",
-        });
+      toast.promise(waitForTransactionConfirmation(jstTransactionId), {
+        loading: "Waiting for JST transaction confirmation...",
+        success: "JST Transaction confirmed successfully!",
+        error: "JST Transaction failed!",
+      });
     }
   };
 
@@ -153,10 +153,12 @@ const Page = () => {
       <div className="min-h-[100vh] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex flex-col gap-5 md:gap-10 justify-center">
         {/* Radial gradient for the container to give a faded look */}
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-        <div className="mt-20 md:mt-0 text-5xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
-          Lending Pool
+        <div className="-mb-5 mt-20 md:mt-0 text-5xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
+          Liquidity Pool
         </div>
+
         <div className="px-4 md:px-[6rem]">
+          <p className="text-white text-2xl font-bold "> Token Pair TRX/JST</p>
           {contractTRXBalance > 0 && (
             <TextGenerateEffect
               words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
@@ -187,8 +189,18 @@ const Page = () => {
         className="bg-white dark:bg-black py-[8rem] md:py-[10rem] lg:py-[12rem]"
         id="invest"
       >
-        <div className="text-5xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
-          Invest In Lending Pool
+        <div className="text-5xl sm:text-6xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
+          Add TRX or JST Liquidity in the Pool
+        </div>
+        <p className="text-white text-center items-center ">
+          P.S You need to approve JST to LiquidityPool.sol <br />
+          to invest in JST, address of that contract is available <br />
+          in the address book and TRX can be invested directly, <br />
+          investors earn APY upto 6% which is determined by <br />
+          governance by investors.
+        </p>
+        <div className="text-5xl sm:text-3xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
+          Earn upto 6% APY
         </div>
         <div className="w-full px-4 md:px-[12rem] lg:px-[20rem] flex flex-col gap-4 text-black dark:text-white">
           <Select value={investmentToken} onValueChange={setInvestmentToken}>
@@ -222,10 +234,15 @@ const Page = () => {
         id="borrow"
       >
         <div className="text-5xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
-          Borrow From Lending Pool
+          Borrow From Liquidity Pool
         </div>
+        <p className="text-white text-center items-center ">
+          You need to have JST invested, having 20% invested <br />
+          extra of the value of same amount of TRX to borrow,
+          <br /> and vice-verca to borrow JST.{" "}
+        </p>
         <div className="text-2xl sm:text-3xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
-          Current Interest 7% APY
+          Current Interest Rate 7%
         </div>
         <div className="w-full px-4 md:px-[12rem] lg:px-[20rem] flex flex-col gap-4 text-black dark:text-white">
           <Select value={borrowToken} onValueChange={setBorrowToken}>
