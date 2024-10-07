@@ -156,8 +156,9 @@ const dummyContent = [
           </li>
           <li>
             • Checkout a Subject contract, available in the RapidLoans/contracts
-            repo too, that is an example of a customer contract using
-            RapidLoans. You can also try it yourself on the TronIde.
+            repo too, that is an example of a customer contract using RapidLoans
+            to perform arbitrage. You can also try it yourself on the
+            TronIde./**LINK */
           </li>
           <li>
             • The process for JST is the same, just swap out TRX functions for
