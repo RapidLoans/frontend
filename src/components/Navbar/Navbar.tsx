@@ -75,9 +75,7 @@ const Navbar = () => {
     <div className="menu-container" ref={container}>
       <div className="menu-bar">
         <div className="menu-logo font-bold text-xl">
-          <Link href={"/"}>
-            RapidLoans
-          </Link>
+          <Link href={"/"}>RapidLoans</Link>
         </div>
         <div className=" flex gap-2 items-center justify-center">
           <WalletActionButton className="rounded-3xl" />
@@ -90,9 +88,7 @@ const Navbar = () => {
       <div className="menu-overlay">
         <div className="menu-overlay-bar">
           <div className="menu-logo font-bold text-xl">
-            <Link href={"/"}>
-              RapidLoans
-            </Link>
+            <Link href={"/"}>RapidLoans</Link>
           </div>
           <div className="menu-close" onClick={toggleMenu}>
             <GrClose id={"close"} className="items-self-baseline" />
@@ -108,21 +104,19 @@ const Navbar = () => {
                     link.label !== "LOGIN"
                       ? link.path
                       : !!user
-                        ? "#"
-                        : "/auth/login"
+                      ? "#"
+                      : "/auth/login"
                   }
                   onClick={
-                    link.label === "LOGIN" && !!user
-                      ? handleLogout
-                      : undefined
+                    link.label === "LOGIN" && !!user ? handleLogout : undefined
                   }
                   className="menu-link"
                 >
                   {link.label !== "LOGIN"
                     ? link.label
                     : !!user
-                      ? "LOGOUT"
-                      : "LOGIN"}
+                    ? "LOGOUT"
+                    : "LOGIN"}
                 </Link>
               </div>
             </div>
@@ -140,9 +134,19 @@ const Navbar = () => {
 
         <div className="menu-info">
           <div className="menu-info-col">
-            <a href="https://x.com/">X &#8599;</a>
+            <a
+              href="https://x.com/"
+              className="text-black text-lg font-semibold"
+            >
+              X &#8599;
+            </a>
             <br />
-            <a href="https://rapidloans.vercel.app">rapidloans.vercel.app &#8599;</a>
+            <a
+              href="https://rapidloans.vercel.app"
+              className="text-black text-lg font-semibold"
+            >
+              rapidloans.vercel.app &#8599;
+            </a>
           </div>
         </div>
       </div>
