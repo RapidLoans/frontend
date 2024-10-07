@@ -144,6 +144,13 @@ const dummyContent = [
             function on the core contract, specifying the amount of TRX you want
             to borrow. The core contract will transfer the requested assets to
             your contract, allowing you to use the loaned funds.
+            <Image
+              src="/flashloansthree.png"
+              className="p-8"
+              alt="flash loans"
+              width={800}
+              height={500}
+            />
           </li>
           <li>
             • Now for the fun part! Inside the{" "}
@@ -153,6 +160,13 @@ const dummyContent = [
             function, you&apos;ll use the loaned funds to perform any logic you
             want—arbitrage, liquidation, you name it. Just don&apos;t forget to
             repay the loan, plus the fee.
+            <Image
+              src="/flashloansfour.png"
+              className="p-8"
+              alt="flash loans"
+              width={800}
+              height={500}
+            />
           </li>
           <li>
             • Checkout a Subject contract, available in the RapidLoans/contracts
