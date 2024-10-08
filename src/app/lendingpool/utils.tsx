@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Bitcoin, Zap, HandCoins } from "lucide-react";
+import { Bitcoin, Zap, HandCoins, Banknote, MessageCircleReply, Handshake } from "lucide-react";
 import Link from "next/link";
 
 export const FeatureCard = ({
@@ -49,15 +49,28 @@ export const FeatureCards = () => {
         <FeatureCard
           title="Withdraw"
           description="Withdraw funds from liquidity pool"
-          icon={Zap}
+          icon={Banknote}
           link={"/lendingpool#withdraw"}
         />
-        {/* <FeatureCard
+        <FeatureCard
+          title="Repay Loan"
+          description="Repay debt to liquidity pool"
+          icon={MessageCircleReply}
+          link={"/lendingpool#repay"}
+        />
+        <FeatureCard
           title="Flash Loan"
           description="Leverage instant, no-collateral flash loans"
           icon={Zap}
           link={"/flashloan"}
-        /> */}
+        />
+        <FeatureCard
+          title="Terms And Conditions"
+          description="Must visit before using Rapid Loans"
+          icon={Handshake}
+          link={"/termsandconditions"}
+        />
+        
       </div>
     </FadeInAnimation>
   );
