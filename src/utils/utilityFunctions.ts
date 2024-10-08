@@ -331,7 +331,7 @@ export const borrowJST = async (amt: number) => {
     );
 
     const amtInDec = amt * 1000000000000000000;
-    const tx = await myContract.BorrowJST(amtInDec).send();
+    const tx = await myContract.borrowJST(amtInDec).send();
     console.log(tx);
     return tx;
   } catch (error) {
@@ -352,8 +352,9 @@ export const repayTRXDebt = async (amt: number) => {
       LP_CONTRACT_ADDRESS
     );
 
+    const amtInSun = amt * 1000000;
     const tx = await myContract.repayTRX().send({
-      callValue: amt,
+      callValue: amtInSun,
     });
 
     return tx;
@@ -365,16 +366,17 @@ export const repayTRXDebt = async (amt: number) => {
 export const repayJSTDebt = async (amt: number) => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) return;
+  const amtInDec = amt * 1000000000000000000;
   try {
     const jst = await tronWeb.contract(JSTAbi, JST_CONTRACT_ADDRESS);
     try {
-      await jst.approve(LP_CONTRACT_ADDRESS, amt).send();
+      await jst.approve(LP_CONTRACT_ADDRESS, amtInDec).send();
       const myContract = await tronWeb.contract(
         LendingPoolABI,
         LP_CONTRACT_ADDRESS
       );
 
-      const tx = await myContract.repayJST(amt).send();
+      const tx = await myContract.repayJST(amtInDec).send();
       console.log(tx);
       return tx;
     } catch (error) {
@@ -457,8 +459,9 @@ export const getUserTRXBorrowedAmount = async () => {
       .call();
 
     const dec: number = tronWeb.toDecimal(tx);
-    console.log(dec);
-    return dec;
+    const valueInTRX = dec / 1000000;
+    console.log(valueInTRX);
+    return valueInTRX;
   } catch (error) {
     console.log(error);
     return 0;
@@ -483,7 +486,8 @@ export const getUserJSTBorrowedAmount = async () => {
       .call();
 
     const dec: number = tronWeb.toDecimal(tx);
-    console.log(dec);
+    const valueInJST = dec / 1000000000000000000;
+    console.log(valueInJST);
     return dec;
   } catch (error) {
     console.log(error);
