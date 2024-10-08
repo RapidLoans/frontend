@@ -308,8 +308,8 @@ export const borrowTRX = async (amt: number) => {
       LendingPoolABI,
       LP_CONTRACT_ADDRESS
     );
-
-    const tx = await myContract.borrowTRX(amt).send();
+    const amtInSun = amt * 1000000;
+    const tx = await myContract.borrowTRX(amtInSun).send();
     console.log(tx);
     return tx;
   } catch (error) {
@@ -352,7 +352,9 @@ export const getUserTRXAmountToRepay = async () => {
       LP_CONTRACT_ADDRESS
     );
 
-    const tx = await myContract.getUserTRXAmountToRepay(tronWeb.defaultAddress.base58).call();
+    const tx = await myContract
+      .getUserTRXAmountToRepay(tronWeb.defaultAddress.base58)
+      .call();
     const dec = tronWeb.toDecimal(tx);
     console.log(dec);
     return dec;
