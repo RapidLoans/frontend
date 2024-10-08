@@ -434,10 +434,10 @@ export const getUserJSTAmountToRepay = async () => {
     const tx = await myContract
       .getUserJSTAmountToRepay(tronWeb.defaultAddress.base58)
       .call();
-
     const dec: number = tronWeb.toDecimal(tx);
-    console.log(dec);
-    return dec;
+    const valueInJST = dec / 1000000000000000000;
+    console.log(valueInJST);
+    return valueInJST;
   } catch (error) {
     console.log(error);
     return 0;
@@ -491,7 +491,7 @@ export const getUserJSTBorrowedAmount = async () => {
     const dec: number = tronWeb.toDecimal(tx);
     const valueInJST = dec / 1000000000000000000;
     console.log(valueInJST);
-    return dec;
+    return valueInJST;
   } catch (error) {
     console.log(error);
     return 0;
