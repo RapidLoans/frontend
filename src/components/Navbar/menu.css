@@ -3,13 +3,13 @@
     top: 0;
     left: 0;
     width: 100vw;
-    padding: 1rem 6rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 2;
-    @apply text-black dark:text-white;
+    @apply text-black dark:text-white px-6 md:px-[6rem] py-4;
 }
+
 #close {
     @apply text-neutral-900 cursor-pointer text-2xl z-[999];
 }
@@ -40,6 +40,7 @@
     z-index: 999;
     display: flex;
     clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+    @apply flex-col md:flex-row justify-center md:justify-between;
 }
 
 .menu-overlay-bar{
@@ -47,49 +48,21 @@
     width: 100%;
     top: 0;
     left: 0;
-    padding: 2rem 6rem;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    @apply  px-6 md:px-[6rem] py-4 justify-between;
 }
 
-.menu-close-icon {
-    flex: 2;
-    display: flex;
-    height: 100%;
-    align-items: flex-end;
-    cursor: pointer;
-}
-
-.menu-copy {
-    height: 100%;
-    flex: 4;
+.menu-links {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding-top: 2em;
-}
-
-.menu-preview {
-    flex: 4;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
-.menu-close-icon p {
-    font-size: 200px;
-    -webkit-text-stroke: 10px #c5fb45;
-    line-height: 70%;
+    gap: 1.5rem;
+    @apply px-4 text-lg;
 }
 
 .menu-link-item {
     width: max-content;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-}
-.menu-links{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
 }
 
 .menu-link-item-holder {
@@ -106,6 +79,7 @@
 
 .menu-info {
     display: flex;
+    @apply absolute bottom-8 left-6 md:static;
 }
 
 .menu-info-col {
@@ -116,15 +90,7 @@
 }
 
 @media (max-width: 900px) {
-    .menu-close-icon {
-        display: none;
-    }
-
-    .menu-copy {
-        padding-top: 8em;
-    }
-
     .menu-link-item-holder a {
-         font-size: 60px;
+         font-size: 50px;
     }
 } 

@@ -88,11 +88,14 @@ const Navbar = () => {
 
       <div className="menu-overlay">
         <div className="menu-overlay-bar">
-          <div className="menu-logo font-bold text-xl">
+          <div className="menu-logo font-bold text-xl text-black">
             <Link href={"/"}>RapidLoans</Link>
           </div>
-          <div className="menu-close" onClick={toggleMenu}>
-            <GrClose id={"close"} className="items-self-baseline" />
+          <div className="flex gap-2 items-center justify-center">
+            <WalletActionButton className="rounded-3xl" />
+            <div className="menu-close" onClick={toggleMenu}>
+              <GrClose id={"close"} className="items-self-baseline" />
+            </div>
           </div>
         </div>
 
@@ -100,46 +103,19 @@ const Navbar = () => {
           {menuLinks.map((link, index) => (
             <div className="menu-link-item" key={index}>
               <div className="menu-link-item-holder" onClick={toggleMenu}>
-                <Link
-                  href={
-                    link.label !== "LOGIN"
-                      ? link.path
-                      : !!user
-                      ? "#"
-                      : "/auth/login"
-                  }
-                  onClick={
-                    link.label === "LOGIN" && !!user ? handleLogout : undefined
-                  }
-                  className="menu-link"
-                >
-                  {link.label !== "LOGIN"
-                    ? link.label
-                    : !!user
-                    ? "LOGOUT"
-                    : "LOGIN"}
-                </Link>
+                <Link href={link.path} className="menu-link">{link.label}</Link>
               </div>
             </div>
           ))}
-          {isAdmin && (
-            <div className="menu-link-item">
-              <div className="menu-link-item-holder" onClick={toggleMenu}>
-                <Link href={"/admin"} className="menu-link">
-                  ADMIN PANEL
-                </Link>
-              </div>
-            </div>
-          )}
         </div>
 
         <div className="menu-info">
           <div className="menu-info-col">
             <a
-              href="https://x.com/"
+              href="https://github.com/RapidLoans"
               className="text-black text-lg font-semibold"
             >
-              X &#8599;
+              Github &#8599;
             </a>
             <br />
             <a
