@@ -13,6 +13,9 @@ import {
   getDaysElapsedAfterInvestment,
   borrowTRX,
   getUserTRXAmountToRepay,
+  repayTRXDebt,
+  repayJSTDebt,
+  getUserTRXBorrowedAmount,
   borrowJST,
   getTronWeb,
   getUserJSTAmountToRepay,
@@ -41,8 +44,8 @@ const Page = () => {
   const [borrowToken, setBorrowToken] = useState<string>("TRX");
   const [borrowAmount, setBorrowAmount] = useState<number>(0);
 
-  const [userTRXRepayAmount, setUserTRXRepayAmount] = useState<number>(0)
-  const [userJSTRepayAmount, setUserJSTRepayAmount] = useState<number>(0)
+  const [userTRXRepayAmount, setUserTRXRepayAmount] = useState<number>(0);
+  const [userJSTRepayAmount, setUserJSTRepayAmount] = useState<number>(0);
 
   const [dataFetched, setDataFetched] = useState<boolean>(false);
 
@@ -64,7 +67,7 @@ const Page = () => {
 
         handleUserWithdrawalState();
 
-        handleRepayAmount()
+        handleRepayAmount();
 
         setDataFetched(() => true);
       } catch (error) {
@@ -218,23 +221,51 @@ const Page = () => {
     if (borrowToken === "TRX") {
       const trxTransactionId = await borrowTRX(borrowAmount);
       console.log(trxTransactionId);
+      return toast.promise(waitForTransactionConfirmation(trxTransactionId), {
+        loading: "Waiting for transaction confirmation...",
+        success: "TRX borrowed successfully",
+        error: "TRX borrow failed!",
+      });
     } else {
       const jstTransactionId = await borrowJST(borrowAmount);
       console.log(jstTransactionId);
+      return toast.promise(waitForTransactionConfirmation(jstTransactionId), {
+        loading: "Waiting for transaction confirmation...",
+        success: "JST borrowed successfully",
+        error: "JST borrow failed!",
+      });
     }
   };
 
   const handleRepay = async () => {
-    toast.success("repay Success")
-  }
+    if (userTRXRepayAmount > 0) {
+      const trxTransactionId = await repayTRXDebt(userTRXRepayAmount);
+      console.log(trxTransactionId);
+      setUserTRXRepayAmount(0);
+      return toast.promise(waitForTransactionConfirmation(trxTransactionId), {
+        loading: "Waiting for repay confirmation...",
+        success: "Funds repay confirmed successfully!",
+        error: "Funds repay failed!",
+      });
+      
+    } else if (userJSTRepayAmount > 0) {
+      const jstTransactionId = await repayJSTDebt(userJSTRepayAmount);
+      console.log(jstTransactionId);
+      setUserJSTRepayAmount(0);
+      return toast.promise(waitForTransactionConfirmation(jstTransactionId), {
+        loading: "Waiting for repay confirmation...",
+        success: "Funds repay confirmed successfully!",
+        error: "Funds repay failed!",
+      });
+    }
+  };
 
   const handleRepayAmount = async () => {
     const TRXRepayAmount = await getUserTRXAmountToRepay();
     const JSTRepayAmount = await getUserJSTAmountToRepay();
-    setUserTRXRepayAmount(TRXRepayAmount)
-    setUserJSTRepayAmount(JSTRepayAmount)
+    setUserTRXRepayAmount(TRXRepayAmount);
+    setUserJSTRepayAmount(JSTRepayAmount);
   };
-
 
   return (
     <div className="bg-white dark:bg-black flex flex-col">
@@ -246,7 +277,10 @@ const Page = () => {
         </div>
 
         <div className="px-6 md:px-[6rem] py-4">
-          <p className="text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500"> Token Pair TRX/JST</p>
+          <p className="text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500">
+            {" "}
+            Token Pair TRX/JST
+          </p>
 
           {dataFetched && (
             <TextGenerateEffect
@@ -341,7 +375,8 @@ const Page = () => {
 
       <div
         className="bg-white px-2 md:px-4 flex flex-col gap-8 dark:bg-black py-[6rem] md:py-[7rem] lg:py-[8rem]"
-        id="borrow">
+        id="borrow"
+      >
         <div className="text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
           Borrow From Liquidity Pool
         </div>
@@ -378,20 +413,15 @@ const Page = () => {
           >
             Borrow {borrowToken}
           </button>
-
-          <button
-            className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
-            onClick={handleRepayAmount}
-          >
-            Repay Amount
-          </button>
         </div>
       </div>
 
       {/* repay section  */}
 
-      <div className="bg-white px-2 md:px-4 flex flex-col gap-8 dark:bg-black py-[6rem] md:py-[7rem] lg:py-[8rem]"
-        id="repay">
+      <div
+        className="bg-white px-2 md:px-4 flex flex-col gap-8 dark:bg-black py-[6rem] md:py-[7rem] lg:py-[8rem]"
+        id="repay"
+      >
         <div className="text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
           Repay to Liquidity Pool
         </div>
@@ -399,13 +429,23 @@ const Page = () => {
           sample text here
         </p> */}
         <div className="text-2xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
-          {userTRXRepayAmount ? `Current outstanding Debt: ${userTRXRepayAmount} TRX` : userJSTRepayAmount ? `Current outstanding Debt: ${userJSTRepayAmount} JST` :""}
+          {userTRXRepayAmount
+            ? `Current outstanding Debt: ${userTRXRepayAmount} TRX`
+            : userJSTRepayAmount
+            ? `Current outstanding Debt: ${userJSTRepayAmount} JST`
+            : ""}
         </div>
         <div className="w-full px-4 md:px-[12rem] lg:px-[20rem] flex flex-col gap-4 text-black dark:text-white">
           <button
             className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
-            onClick={handleRepay}>
-            Repay {userTRXRepayAmount ? `${userTRXRepayAmount} TRX` : userJSTRepayAmount ? `${userJSTRepayAmount} JST` : ""}
+            onClick={handleRepay}
+          >
+            Repay{" "}
+            {userTRXRepayAmount
+              ? `${userTRXRepayAmount} TRX`
+              : userJSTRepayAmount
+              ? `${userJSTRepayAmount} JST`
+              : ""}
           </button>
         </div>
       </div>
