@@ -39,6 +39,8 @@ const Page = () => {
   const [borrowToken, setBorrowToken] = useState<string>("TRX");
   const [borrowAmount, setBorrowAmount] = useState<number>(0);
 
+  const [dataFetched, setDataFetched] = useState<boolean>(false)
+
   useEffect(() => {
     const fetchAllData = async () => {
       try {
@@ -56,6 +58,7 @@ const Page = () => {
         setUserJSTBalance(user_JST);
 
         handleUserWithdrawalState();
+        setDataFetched(() => true)
       } catch (error) {
         console.error("Error fetching contract data:", error);
       }
@@ -88,6 +91,8 @@ const Page = () => {
 
   const handleInvestment = async () => {
     if (investmentToken === "TRX") {
+      if (UserJSTBalance > 0 || UserTRXBalance > 0)
+        return toast.error("Withdrow previous funds before investing again")
       const trxTransactionId = await InvestInTRX(investmentAmount);
       console.log(trxTransactionId);
 
@@ -102,6 +107,8 @@ const Page = () => {
         error: "TRX Transaction failed!",
       });
     } else if (investmentToken === "JST") {
+      if (UserJSTBalance > 0 || UserTRXBalance > 0)
+        return toast.error("Withdrow previous funds before investing again")
       const jstTransactionId = await InvestInJST(investmentAmount);
       if (jstTransactionId === "declined") {
         toast.error("Confirmation declined by user");
@@ -208,6 +215,7 @@ const Page = () => {
       console.log(jstTransactionId);
     }
   };
+
   return (
     <div className="bg-white dark:bg-black flex flex-col">
       <div className="min-h-[100vh] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex flex-col gap-5 md:gap-10 justify-center">
@@ -220,21 +228,21 @@ const Page = () => {
         <div className="px-4 md:px-[6rem]">
           <p className="text-white text-2xl font-bold "> Token Pair TRX/JST</p>
 
-          <TextGenerateEffect
+          {dataFetched && <TextGenerateEffect
             words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
-          />
+          />}
 
-          <TextGenerateEffect
+          {dataFetched && <TextGenerateEffect
             words={`Amount of JST in Liquidity Pool: ${contractJSTBalance} JST`}
-          />
+          />}
 
-          <TextGenerateEffect
+          {dataFetched && <TextGenerateEffect
             words={`Your TRX Investment: ${UserTRXBalance} TRX`}
-          />
+          />}
 
-          <TextGenerateEffect
+          {dataFetched && <TextGenerateEffect
             words={`Your JST Investment: ${UserJSTBalance} JST`}
-          />
+          />}
         </div>
         <div className="px-4 md:px-[6rem]">
           <FeatureCards />
