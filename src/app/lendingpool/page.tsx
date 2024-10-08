@@ -11,8 +11,11 @@ import {
   withdrawTRX,
   withdrawJST,
   getDaysElapsedAfterInvestment,
-  BorrowTRX,
-  BorrowJST,
+  getTRXToJST,
+  getJSTToTRX,
+  borrowTRX,
+  getUserTRXAmountToRepay,
+  borrowJST,
   getTronWeb,
 } from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
@@ -39,7 +42,7 @@ const Page = () => {
   const [borrowToken, setBorrowToken] = useState<string>("TRX");
   const [borrowAmount, setBorrowAmount] = useState<number>(0);
 
-  const [dataFetched, setDataFetched] = useState<boolean>(false)
+  const [dataFetched, setDataFetched] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -58,7 +61,7 @@ const Page = () => {
         setUserJSTBalance(user_JST);
 
         handleUserWithdrawalState();
-        setDataFetched(() => true)
+        setDataFetched(() => true);
       } catch (error) {
         console.error("Error fetching contract data:", error);
       }
@@ -92,7 +95,7 @@ const Page = () => {
   const handleInvestment = async () => {
     if (investmentToken === "TRX") {
       if (UserJSTBalance > 0 || UserTRXBalance > 0)
-        return toast.error("Withdrow previous funds before investing again")
+        return toast.error("Withdraw previous funds before investing again");
       const trxTransactionId = await InvestInTRX(investmentAmount);
       console.log(trxTransactionId);
 
@@ -108,7 +111,7 @@ const Page = () => {
       });
     } else if (investmentToken === "JST") {
       if (UserJSTBalance > 0 || UserTRXBalance > 0)
-        return toast.error("Withdrow previous funds before investing again")
+        return toast.error("Withdraw previous funds before investing again");
       const jstTransactionId = await InvestInJST(investmentAmount);
       if (jstTransactionId === "declined") {
         toast.error("Confirmation declined by user");
@@ -188,7 +191,7 @@ const Page = () => {
     } else if (UserJSTBalance > 0) {
       if (investmentDaysElapsed < 15)
         return toast.error(
-          `Wait ${15 - investmentDaysElapsed} days to withdraw Funds`
+          `Wait ${15 - investmentDaysElapsed} more days to withdraw Funds`
         );
       console.log("Inside JST");
       const txId = await withdrawJST(UserJSTBalance);
@@ -208,12 +211,17 @@ const Page = () => {
 
   const handleBorrow = async () => {
     if (borrowToken === "TRX") {
-      const trxTransactionId = await BorrowTRX(borrowAmount);
+      const trxTransactionId = await borrowTRX(borrowAmount);
       console.log(trxTransactionId);
     } else {
-      const jstTransactionId = await BorrowJST(borrowAmount);
+      const jstTransactionId = await borrowJST(borrowAmount);
       console.log(jstTransactionId);
     }
+  };
+
+  const handleRepayAmount = async () => {
+    const repayAmount = await getUserTRXAmountToRepay();
+    console.log(repayAmount);
   };
 
   return (
@@ -228,21 +236,29 @@ const Page = () => {
         <div className="px-4 md:px-[6rem]">
           <p className="text-white text-2xl font-bold "> Token Pair TRX/JST</p>
 
-          {dataFetched && <TextGenerateEffect
-            words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
-          />}
+          {dataFetched && (
+            <TextGenerateEffect
+              words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
+            />
+          )}
 
-          {dataFetched && <TextGenerateEffect
-            words={`Amount of JST in Liquidity Pool: ${contractJSTBalance} JST`}
-          />}
+          {dataFetched && (
+            <TextGenerateEffect
+              words={`Amount of JST in Liquidity Pool: ${contractJSTBalance} JST`}
+            />
+          )}
 
-          {dataFetched && <TextGenerateEffect
-            words={`Your TRX Investment: ${UserTRXBalance} TRX`}
-          />}
+          {dataFetched && (
+            <TextGenerateEffect
+              words={`Your TRX Investment: ${UserTRXBalance} TRX`}
+            />
+          )}
 
-          {dataFetched && <TextGenerateEffect
-            words={`Your JST Investment: ${UserJSTBalance} JST`}
-          />}
+          {dataFetched && (
+            <TextGenerateEffect
+              words={`Your JST Investment: ${UserJSTBalance} JST`}
+            />
+          )}
         </div>
         <div className="px-4 md:px-[6rem]">
           <FeatureCards />
@@ -349,6 +365,13 @@ const Page = () => {
             onClick={handleBorrow}
           >
             Borrow {borrowToken}
+          </button>
+
+          <button
+            className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
+            onClick={handleRepayAmount}
+          >
+            Repay Amount
           </button>
         </div>
       </div>

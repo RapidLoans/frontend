@@ -1,7 +1,7 @@
-export const LP_CONTRACT_ADDRESS = "TWcbTTEeNmCkMMX9KapsZmjw6BodQr1G8N";
+export const LP_CONTRACT_ADDRESS = "TJmcwgjZRju997ySsSGCi8SwPqJcoaEjrE";
 export const JST_CONTRACT_ADDRESS = "TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3";
 export const PriceOracle_CONTRACT_ADDRESS =
-  "TXJL8v31JKk6mm1QA9kpM6H3iaYabvu9fw";
+  "THVZw2pkszLmoDFziD9hZ3ddNZRiiyDKcg";
 export const LendingPoolABI = [
   {
     inputs: [
@@ -207,7 +207,20 @@ export const LendingPoolABI = [
   },
   {
     inputs: [],
-    name: "BORROW_RATE",
+    name: "BORROW_RATE_1_MONTH",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "INVESTMENT_RETURNS_15_DAYS",
     outputs: [
       {
         internalType: "uint256",
@@ -233,19 +246,6 @@ export const LendingPoolABI = [
   },
   {
     inputs: [],
-    name: "PROFIT_RATE",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "RAPID_LOANS_CORE",
     outputs: [
       {
@@ -259,11 +259,6 @@ export const LendingPoolABI = [
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "subject",
-        type: "address",
-      },
       {
         internalType: "uint256",
         name: "amount",
@@ -283,11 +278,6 @@ export const LendingPoolABI = [
   },
   {
     inputs: [
-      {
-        internalType: "address payable",
-        name: "subject",
-        type: "address",
-      },
       {
         internalType: "uint256",
         name: "amount",
@@ -441,10 +431,39 @@ export const LendingPoolABI = [
             name: "borrowedJST",
             type: "uint256",
           },
+          {
+            internalType: "uint256",
+            name: "lastBorrowedTRXTimestamp",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "lastBorrowedJSTTimestamp",
+            type: "uint256",
+          },
         ],
         internalType: "struct LiquidityPool.investor",
         name: "investorStruct",
         type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "borrowerAddress",
+        type: "address",
+      },
+    ],
+    name: "getUserJSTAmountToRepay",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "finalAmount",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -496,6 +515,44 @@ export const LendingPoolABI = [
         type: "address",
       },
     ],
+    name: "getUserLastBorrowedJSTTimestamp",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "investorAddress",
+        type: "address",
+      },
+    ],
+    name: "getUserLastBorrowedTRXTimestamp",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "investorAddress",
+        type: "address",
+      },
+    ],
     name: "getUserLastInvestedJSTTimestamp",
     outputs: [
       {
@@ -520,6 +577,25 @@ export const LendingPoolABI = [
       {
         internalType: "uint256",
         name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "borrowerAddress",
+        type: "address",
+      },
+    ],
+    name: "getUserTRXAmountToRepay",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "finalAmount",
         type: "uint256",
       },
     ],

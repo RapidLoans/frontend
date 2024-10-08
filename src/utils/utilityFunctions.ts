@@ -296,7 +296,7 @@ export const getJSTToTRX = async (amt: number) => {
   }
 };
 
-export const BorrowTRX = async (amt: number) => {
+export const borrowTRX = async (amt: number) => {
   const tronWeb = await getTronWeb();
   try {
     if (!tronWeb) {
@@ -309,9 +309,7 @@ export const BorrowTRX = async (amt: number) => {
       LP_CONTRACT_ADDRESS
     );
 
-    console.log(myContract);
-
-    const tx = await myContract.BorrowTRX(amt).send();
+    const tx = await myContract.borrowTRX(amt).send();
     console.log(tx);
     return tx;
   } catch (error) {
@@ -319,7 +317,7 @@ export const BorrowTRX = async (amt: number) => {
   }
 };
 
-export const BorrowJST = async (amt: number) => {
+export const borrowJST = async (amt: number) => {
   const tronWeb = await getTronWeb();
   try {
     if (!tronWeb) {
@@ -332,10 +330,33 @@ export const BorrowJST = async (amt: number) => {
       LP_CONTRACT_ADDRESS
     );
 
-    const tx = await myContract.BorrowJST(amt).send();
+    const amtInDec = amt * 1000000000000000000;
+    const tx = await myContract.BorrowJST(amtInDec).send();
     console.log(tx);
     return tx;
   } catch (error) {
     console.log("Borrow JST Error: ", error);
+  }
+};
+
+export const getUserTRXAmountToRepay = async () => {
+  const tronWeb = await getTronWeb();
+  try {
+    if (!tronWeb) {
+      console.error("TronWeb not initialized");
+      return 0;
+    }
+
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
+
+    const tx = await myContract.getUserTRXAmountToRepay(tronWeb.defaultAddress.base58).call();
+    const dec = tronWeb.toDecimal(tx);
+    console.log(dec);
+    return dec;
+  } catch (error) {
+    console.log(error);
   }
 };
