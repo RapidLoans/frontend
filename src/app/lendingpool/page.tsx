@@ -229,14 +229,22 @@ const Page = () => {
     if (borrowToken === "TRX") {
       const trxTransactionId = await borrowTRX(borrowAmount);
       console.log(trxTransactionId);
+      if (trxTransactionId === "declined") {
+        toast.error("Declined by user");
+        return;
+      }
       return toast.promise(waitForTransactionConfirmation(trxTransactionId), {
         loading: "Waiting for transaction confirmation...",
         success: "TRX borrowed successfully",
         error: "TRX borrow failed!",
       });
-    } else {
+    } else if (borrowToken === "JST") {
       const jstTransactionId = await borrowJST(borrowAmount);
       console.log(jstTransactionId);
+      if (jstTransactionId === "declined") {
+        toast.error("Declined by user");
+        return;
+      }
       return toast.promise(waitForTransactionConfirmation(jstTransactionId), {
         loading: "Waiting for transaction confirmation...",
         success: "JST borrowed successfully",
@@ -250,15 +258,23 @@ const Page = () => {
       const trxTransactionId = await repayTRXDebt(userTRXRepayAmount);
       console.log(trxTransactionId);
       setUserTRXRepayAmount(0);
+      if (trxTransactionId === "declined") {
+        toast.error("Declined by user");
+        return;
+      }
       return toast.promise(waitForTransactionConfirmation(trxTransactionId), {
         loading: "Waiting for repay confirmation...",
-        success: "Funds repay confirmed successfully!",
+        success: "Funds repayed successfully!",
         error: "Funds repay failed!",
       });
 
     } else if (userJSTRepayAmount > 0) {
       const jstTransactionId = await repayJSTDebt(userJSTRepayAmount);
       console.log(jstTransactionId);
+      if (jstTransactionId === "declined") {
+        toast.error("Declined by user");
+        return;
+      }
       setUserJSTRepayAmount(0);
       return toast.promise(waitForTransactionConfirmation(jstTransactionId), {
         loading: "Waiting for repay confirmation...",
@@ -280,16 +296,10 @@ const Page = () => {
       <div className="min-h-[100vh] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex flex-col gap-5 md:gap-10 justify-center">
         {/* Radial gradient for the container to give a faded look */}
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-        <div className="mt-20 md:mt-5 text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
+        <div className="mt-20 md:mt-5 text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 pb-0 text-center">
           Liquidity Pool
         </div>
-
-        <div className="px-6 md:px-[6rem] py-4">
-          <p className="text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500">
-            {" "}
-            Token Pair TRX/JST
-          </p>
-
+        <div className="text-3xl sm:text-4xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
           {dataFetched && (
             <TextGenerateEffect
               words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
@@ -301,8 +311,68 @@ const Page = () => {
               words={`Amount of JST in Liquidity Pool: ${contractJSTBalance} JST`}
             />
           )}
+        </div>
+
+        <div className="px-6 md:px-[6rem] py-4 pt-0">
+          <p className="text-3xl text-center font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500">
+            {" "}
+            Token Pair TRX/JST
+          </p>
+
+          <div className="flex justify-between">
+            <div>
+              {dataFetched && (
+                <TextGenerateEffect
+                  words={`Your TRX Investment: ${UserTRXBalance} TRX`}
+                />
+              )}
+
+              {dataFetched && (
+                <TextGenerateEffect
+                  words={`Your JST Investment: ${UserJSTBalance} JST`}
+                />
+              )}
+            </div>
+
+            <div>
+              {dataFetched && (
+                <TextGenerateEffect
+                  words={`Current Borrowings : ${userTRXBorrowedAmount > 0
+                      ? `${userTRXBorrowedAmount} TRX`
+                      : userJSTBorrowedAmount > 0
+                        ? `${userJSTBorrowedAmount} JST`
+                        : "0"
+                    }`}
+                />
+
+              )}
+
+
+              {dataFetched && (
+                <TextGenerateEffect
+                  words={userTRXRepayAmount
+                    ? `Current Debt : ${userTRXRepayAmount} TRX`
+                    : userJSTBorrowedAmount
+                      ? `Currently Borrowed : ${userJSTBorrowedAmount} JST`
+                      : "You're Currently Debt Free."}
+                />
+              )}
+            </div>
+          </div>
+
+          {/* {dataFetched && (
+            <TextGenerateEffect
+              words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
+            />
+          )}
 
           {dataFetched && (
+            <TextGenerateEffect
+              words={`Amount of JST in Liquidity Pool: ${contractJSTBalance} JST`}
+            />
+          )} */}
+
+          {/* {dataFetched && (
             <TextGenerateEffect
               words={`Your TRX Investment: ${UserTRXBalance} TRX`}
             />
@@ -312,9 +382,9 @@ const Page = () => {
             <TextGenerateEffect
               words={`Your JST Investment: ${UserJSTBalance} JST`}
             />
-          )}
+          )} */}
 
-          {dataFetched && (userTRXBorrowedAmount || userJSTBorrowedAmount ) && (
+          {/* {dataFetched && (userTRXBorrowedAmount || userJSTBorrowedAmount ) && (
             <TextGenerateEffect
               words={userTRXBorrowedAmount > 0
                 ? `Currently Borrowed : ${userTRXBorrowedAmount} TRX`
@@ -331,7 +401,7 @@ const Page = () => {
                   ? `Currently Borrowed : ${userJSTBorrowedAmount} JST`
                   : "You're Currently Debt Free."}
             />
-          )}
+          )} */}
         </div>
 
         <div className="px-6 md:px-[6rem]">
@@ -450,10 +520,10 @@ const Page = () => {
         id="repay"
       >
         <div className="text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
-          Repay to Liquidity Pool
+          Repay Loan
         </div>
         <p className="text-white font-extrabold italic text-center items-center relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500">
-          Note - 
+          Note -
         </p>
         <div className="text-2xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
           {userTRXRepayAmount

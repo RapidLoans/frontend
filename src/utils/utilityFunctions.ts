@@ -314,6 +314,7 @@ export const borrowTRX = async (amt: number) => {
     return tx;
   } catch (error) {
     console.log("Borrow TRX Error: ", error);
+    return "declined";
   }
 };
 
@@ -330,14 +331,15 @@ export const borrowJST = async (amt: number) => {
       LP_CONTRACT_ADDRESS
     );
 
-    const amtInDec = amt * 1000000000000000000;
-    const tx = await myContract.BorrowJST(amtInDec).send();
+    const amtInDec = BigInt(amt * 1000000000000000000);
+    const tx = await myContract.borrowJST(amtInDec).send();
     console.log(tx);
     return tx;
   } catch (error) {
     console.log("Borrow JST Error: ", error);
+    return "declined"
   }
-};
+}
 
 export const repayTRXDebt = async (amt: number) => {
   const tronWeb = await getTronWeb();
