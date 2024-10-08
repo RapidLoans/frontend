@@ -20,7 +20,14 @@ const menuLinks = [
     path: "/flashloan",
     label: "FLASH LOAN",
   },
-  { path: "/addressbook", label: "ADDRESS BOOK" },
+  { 
+    path: "/addressbook",
+     label: "ADDRESS BOOK" 
+  },
+  { 
+    path: "/termsandconditions",
+    label: "T&C" 
+  },
 ];
 
 const Navbar = () => {
