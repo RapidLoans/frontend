@@ -314,28 +314,31 @@ export const borrowTRX = async (amt: number) => {
     return tx;
   } catch (error) {
     console.log("Borrow TRX Error: ", error);
+    return "declined";
   }
 };
 
 export const borrowJST = async (amt: number) => {
-  const tronWeb = await getTronWeb();
   try {
-    if (!tronWeb) {
-      console.error("TronWeb not initialized");
-      return 0;
-    }
+    const tronWeb = await getTronWeb();
+    if (!tronWeb) throw new Error("TronWeb not initialized");
 
-    const myContract = await tronWeb.contract(
+    const amtInDec = BigInt(amt * 1e18);
+
+    const jstContract = await tronWeb.contract(JSTAbi, JST_CONTRACT_ADDRESS);
+    const lendingPoolContract = await tronWeb.contract(
       LendingPoolABI,
       LP_CONTRACT_ADDRESS
     );
 
-    const amtInDec = amt * 1000000000000000000;
-    const tx = await myContract.borrowJST(amtInDec).send();
+    await jstContract.approve(LP_CONTRACT_ADDRESS, amtInDec).send();
+
+    const tx = await lendingPoolContract.borrowJST(amtInDec).send();
     console.log(tx);
     return tx;
   } catch (error) {
-    console.log("Borrow JST Error: ", error);
+    console.error("Borrow JST Error:", error);
+    return "declined";
   }
 };
 
