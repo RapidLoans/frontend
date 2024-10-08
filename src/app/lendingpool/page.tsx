@@ -481,9 +481,9 @@ const Page = () => {
           Borrow From Liquidity Pool
         </div>
         <p className="text-white text-center items-center">
-          To borrow TRX, you need to have 20% more JST invested than the TRX
+          To borrow TRX, you need to have 5% more JST invested than the TRX
           amount you&apos;re borrowing. <br /> Similarly, to borrow JST, you
-          need to have 20% more TRX invested than the JST amount you&apos;re
+          need to have 5% more TRX invested than the JST amount you&apos;re
           borrowing.
         </p>
         <div className="text-2xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
@@ -526,7 +526,8 @@ const Page = () => {
           Repay Loan
         </div>
         <p className="text-white font-extrabold italic text-center items-center relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500">
-          Note -
+          Note - Loans must be repaid within 30 days. If the repayment deadline
+          is missed, the interest doubles,
         </p>
         <div className="text-2xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
           {userTRXRepayAmount
