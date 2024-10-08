@@ -11,8 +11,6 @@ import {
   withdrawTRX,
   withdrawJST,
   getDaysElapsedAfterInvestment,
-  getTRXToJST,
-  getJSTToTRX,
   borrowTRX,
   getUserTRXAmountToRepay,
   borrowJST,
@@ -329,8 +327,7 @@ const Page = () => {
 
       <div
         className="bg-white px-2 md:px-4 flex flex-col gap-8 dark:bg-black py-[6rem] md:py-[7rem] lg:py-[8rem]"
-        id="borrow"
-      >
+        id="borrow">
         <div className="text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
           Borrow From Liquidity Pool
         </div>

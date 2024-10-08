@@ -5,12 +5,7 @@ import "./menu.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { gsap } from "gsap";
 import { GrClose } from "react-icons/gr";
-import { useRouter } from "next/navigation";
 import { WalletActionButton } from "@tronweb3/tronwallet-adapter-react-ui";
-
-// Dummy user & isAdmin variables (Replace with actual logic or props)
-const user = null; // Replace with actual user state or context
-const isAdmin = false; // Replace with actual admin logic
 
 const menuLinks = [
   {
@@ -32,7 +27,6 @@ const Navbar = () => {
   const container = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const tl = useRef(gsap.timeline({ paused: true }));
-  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -65,12 +59,6 @@ const Navbar = () => {
       tl.current.reverse();
     }
   }, [isMenuOpen]);
-
-  const handleLogout = async () => {
-    // Dummy logout function, replace with actual implementation
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulating async logout
-    router.refresh();
-  };
 
   return (
     <div className="menu-container" ref={container}>
