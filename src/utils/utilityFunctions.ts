@@ -246,7 +246,7 @@ export const getDaysElapsedAfterInvestment = async () => {
     // Calculate the difference in seconds
     const timeElapsedInSeconds = currentTimestamp - dec;
     const timeElapsedInDays = timeElapsedInSeconds / 86400;
-    return timeElapsedInDays;
+    return Math.floor(timeElapsedInDays);
   } catch (error) {
     console.log(error);
   }
