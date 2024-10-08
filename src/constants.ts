@@ -1,4 +1,4 @@
-export const LP_CONTRACT_ADDRESS = "TWJmEjGePV5g6sZThnqB73SukCfwkqUE76";
+export const LP_CONTRACT_ADDRESS = "TNW2bEeTHh7xAMFaUxcpVAym7ZcyCDFn3P";
 export const JST_CONTRACT_ADDRESS = "TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3";
 export const PriceOracle_CONTRACT_ADDRESS =
   "TNpogvqtiT29HmNb4cuv9KFwUxar7crChc";
