@@ -11,6 +11,8 @@ import {
   withdrawTRX,
   withdrawJST,
   getDaysElapsedAfterInvestment,
+  BorrowTRX,
+  BorrowJST,
   getTronWeb,
 } from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
@@ -25,8 +27,8 @@ import {
 import { toast } from "sonner";
 
 const Page = () => {
-  const [contractJSTBalance, setContractJSTBalance] = useState(0);
-  const [contractTRXBalance, setContractTRXBalance] = useState(0);
+  const [contractJSTBalance, setContractJSTBalance] = useState<number>(0);
+  const [contractTRXBalance, setContractTRXBalance] = useState<number>(0);
   const [UserTRXBalance, setUserTRXBalance] = useState<number>(0);
   const [UserJSTBalance, setUserJSTBalance] = useState<number>(0);
   const [investmentToken, setInvestmentToken] = useState<string>("TRX");
@@ -49,7 +51,7 @@ const Page = () => {
         const user_TRX = await fetchUserTRXBalance();
         console.log("user Trx", user_TRX);
         setUserTRXBalance(user_TRX);
-        
+
         const user_JST = await fetchUserJSTBalance();
         setUserJSTBalance(user_JST);
 
@@ -162,10 +164,12 @@ const Page = () => {
   };
 
   const handleWithdrawal = async () => {
-    if (UserTRXBalance > 0 ) {
-      if(investmentDaysElapsed < 15)
-        return toast.error(`Wait ${15 - investmentDaysElapsed} to withdraw Funds`);
-      console.log("Inside TRX");
+    console.log(investmentDaysElapsed);
+    if (UserTRXBalance > 0) {
+      if (investmentDaysElapsed < 15)
+        return toast.error(
+          `Wait ${15 - investmentDaysElapsed} days to withdraw Funds`
+        );
       const balanceInSun = UserTRXBalance * 1000000;
       const txId = await withdrawTRX(balanceInSun);
       console.log(txId);
@@ -174,10 +178,11 @@ const Page = () => {
         success: "TRX Withdrawal confirmed successfully!",
         error: "TRX Withdrawal failed!",
       });
-    }
-    else if (UserJSTBalance > 0) {
+    } else if (UserJSTBalance > 0) {
       if (investmentDaysElapsed < 15)
-        return toast.error(`Wait ${15 - investmentDaysElapsed} to withdraw Funds`);
+        return toast.error(
+          `Wait ${15 - investmentDaysElapsed} days to withdraw Funds`
+        );
       console.log("Inside JST");
       const txId = await withdrawJST(UserJSTBalance);
       console.log(txId);
@@ -186,15 +191,23 @@ const Page = () => {
         success: "JST Withdrawal confirmed successfully!",
         error: "JST Withdrawal failed!",
       });
-    }
-    else return toast.success("No Funds to Withdraw")
+    } else return toast.success("No Funds to Withdraw");
   };
 
-    const handleUserWithdrawalState = async () => {
-      const daysElapsed = await getDaysElapsedAfterInvestment();
-      setInvestDaysElapsed(daysElapsed || 0);
-    }; 
+  const handleUserWithdrawalState = async () => {
+    const daysElapsed = await getDaysElapsedAfterInvestment();
+    setInvestDaysElapsed(daysElapsed || 0);
+  };
 
+  const handleBorrow = async () => {
+    if (borrowToken === "TRX") {
+      const trxTransactionId = await BorrowTRX(borrowAmount);
+      console.log(trxTransactionId);
+    } else {
+      const jstTransactionId = await BorrowJST(borrowAmount);
+      console.log(jstTransactionId);
+    }
+  };
   return (
     <div className="bg-white dark:bg-black flex flex-col">
       <div className="min-h-[100vh] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex flex-col gap-5 md:gap-10 justify-center">
@@ -274,9 +287,12 @@ const Page = () => {
           Withdraw from Liquidity Pool
         </div>
         <div className="text-xl font-bold  bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-2 mb-6 text-center">
-          You can only withdraw your funds 15 days after your initial investment.
+          You can only withdraw your funds 15 days after your initial
+          investment.
         </div>
-        <div className={`w-full px-4 md:px-[16rem] lg:px-[24rem] flex flex-col gap-4 text-black dark:text-white`}>
+        <div
+          className={`w-full px-4 md:px-[16rem] lg:px-[24rem] flex flex-col gap-4 text-black dark:text-white`}
+        >
           <button
             className={`border border-white px-4 py-2 rounded-md`}
             onClick={handleWithdrawal}
@@ -294,7 +310,10 @@ const Page = () => {
           Borrow From Liquidity Pool
         </div>
         <p className="text-white text-center items-center">
-          To borrow TRX, you need to have 20% more JST invested than the TRX amount you&apos;re borrowing. <br /> Similarly, to borrow JST, you need to have 20% more TRX invested than the JST amount you&apos;re borrowing.
+          To borrow TRX, you need to have 20% more JST invested than the TRX
+          amount you&apos;re borrowing. <br /> Similarly, to borrow JST, you
+          need to have 20% more TRX invested than the JST amount you&apos;re
+          borrowing.
         </p>
         <div className="text-2xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
           Current Interest Rate 7%
@@ -319,9 +338,9 @@ const Page = () => {
           />
           <button
             className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
-            onClick={handleInvestment}
+            onClick={handleBorrow}
           >
-            Borrow
+            Borrow {borrowToken}
           </button>
         </div>
       </div>
