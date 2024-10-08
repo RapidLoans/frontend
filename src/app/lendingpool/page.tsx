@@ -294,7 +294,7 @@ const Page = () => {
           Borrow From Liquidity Pool
         </div>
         <p className="text-white text-center items-center">
-          To borrow TRX, you need to have 20% more JST invested than the TRX amount you're borrowing. <br /> Similarly, to borrow JST, you need to have 20% more TRX invested than the JST amount you're borrowing.
+          To borrow TRX, you need to have 20% more JST invested than the TRX amount you&apos;re borrowing. <br /> Similarly, to borrow JST, you need to have 20% more TRX invested than the JST amount you&apos;re borrowing.
         </p>
         <div className="text-2xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
           Current Interest Rate 7%
