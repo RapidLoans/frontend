@@ -2,17 +2,17 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="bg-white dark:bg-black text-black dark:text-white w-full h-full m-32">
-      <h1 className="text-5xl font-bold text-center mb-8">
+    <div className="px-4 md:mx-auto bg-white dark:bg-black text-black dark:text-white w-full h-full max-w-screen-lg overflow-hidden">
+      <div className="my-20 md:my-10 text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 pb-0 text-center">
         Terms and Conditions
-      </h1>
+      </div>
 
-      <div className="space-y-8">
+      <div className="space-y-8 mb-10">
         <section>
           <h2 className="text-3xl font-semibold mb-4 text-secondary">
             1. General Overview
           </h2>
-          <p className="text-lg text-body">
+          <p className="text-lg text-body break-words">
             By participating in the RapidLoans Liquidity Pool, you agree to the
             following terms and conditions. The liquidity pool allows users to
             deposit TRX or JST tokens in exchange for a fixed return over a
@@ -88,7 +88,7 @@ const page = () => {
           <h2 className="text-3xl font-semibold mb-4 text-secondary">
             4. Flash Loan Provision
           </h2>
-          <p className="text-lg text-body">
+          <p className="text-lg text-body break-words">
             The liquidity pool supports flash loans, governed by a separate
             Flash Loan Agreement. Flash loans must be repaid within the same
             transaction, ensuring no risk to the liquidity pool.
@@ -99,7 +99,7 @@ const page = () => {
           <h2 className="text-3xl font-semibold mb-4 text-secondary">
             5. User Responsibilities
           </h2>
-          <ul className="list-disc pl-8 text-lg text-body">
+          <ul className="list-disc pl-8 text-lg text-body break-words">
             <li>
               <strong>Accurate Information:</strong> You are responsible for
               ensuring your deposits and loans are accurate and valid.
@@ -123,7 +123,7 @@ const page = () => {
           <h2 className="text-3xl font-semibold mb-4 text-secondary">
             6. Modification of Terms
           </h2>
-          <p className="text-lg text-body">
+          <p className="text-lg text-body break-words">
             RapidLoans reserves the right to amend these terms at any time.
             Changes will be communicated via the platform, and continued
             participation signifies acceptance of modified terms.
@@ -134,7 +134,7 @@ const page = () => {
           <h2 className="text-3xl font-semibold mb-4 text-secondary">
             7. Termination and Suspension
           </h2>
-          <p className="text-lg text-body">
+          <p className="text-lg text-body break-words">
             RapidLoans reserves the right to suspend or terminate access to the
             liquidity pool at its discretion. In case of termination, all users
             can withdraw their funds after the 15-day term ends.
