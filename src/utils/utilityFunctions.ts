@@ -461,6 +461,7 @@ export const getUserTRXBorrowedAmount = async () => {
     return dec;
   } catch (error) {
     console.log(error);
+    return 0;
   }
 };
 
@@ -486,5 +487,6 @@ export const getUserJSTBorrowedAmount = async () => {
     return dec;
   } catch (error) {
     console.log(error);
+    return 0;
   }
 };

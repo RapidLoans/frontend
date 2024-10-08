@@ -16,6 +16,7 @@ import {
   repayTRXDebt,
   repayJSTDebt,
   getUserTRXBorrowedAmount,
+  getUserJSTBorrowedAmount,
   borrowJST,
   getTronWeb,
   getUserJSTAmountToRepay,
@@ -43,6 +44,8 @@ const Page = () => {
 
   const [borrowToken, setBorrowToken] = useState<string>("TRX");
   const [borrowAmount, setBorrowAmount] = useState<number>(0);
+  const [userTRXBorrowedAmount, setUserTRXBorrowedAmount] = useState<number>(0)
+  const [userJSTBorrowedAmount, setUserJSTBorrowedAmount] = useState<number>(0)
 
   const [userTRXRepayAmount, setUserTRXRepayAmount] = useState<number>(0);
   const [userJSTRepayAmount, setUserJSTRepayAmount] = useState<number>(0);
@@ -64,6 +67,11 @@ const Page = () => {
 
         const user_JST = await fetchUserJSTBalance();
         setUserJSTBalance(user_JST);
+
+        const userBorrowedTRX = await getUserTRXBorrowedAmount()
+        setUserTRXBorrowedAmount(userBorrowedTRX)
+        const userBorrowedJST = await getUserJSTBorrowedAmount()
+        setUserJSTBorrowedAmount(userBorrowedJST)
 
         handleUserWithdrawalState();
 
@@ -247,7 +255,7 @@ const Page = () => {
         success: "Funds repay confirmed successfully!",
         error: "Funds repay failed!",
       });
-      
+
     } else if (userJSTRepayAmount > 0) {
       const jstTransactionId = await repayJSTDebt(userJSTRepayAmount);
       console.log(jstTransactionId);
@@ -303,6 +311,25 @@ const Page = () => {
           {dataFetched && (
             <TextGenerateEffect
               words={`Your JST Investment: ${UserJSTBalance} JST`}
+            />
+          )}
+
+          {dataFetched && (userTRXBorrowedAmount || userJSTBorrowedAmount ) && (
+            <TextGenerateEffect
+              words={userTRXBorrowedAmount > 0
+                ? `Currently Borrowed : ${userTRXBorrowedAmount} TRX`
+                : `Currently Borrowed : ${userJSTBorrowedAmount} JST`}
+            />
+          )}
+
+
+          {dataFetched && (
+            <TextGenerateEffect
+              words={userTRXRepayAmount
+                ? `Current Debt : ${userTRXRepayAmount} TRX`
+                : userJSTBorrowedAmount
+                  ? `Currently Borrowed : ${userJSTBorrowedAmount} JST`
+                  : "You're Currently Debt Free."}
             />
           )}
         </div>
@@ -425,15 +452,15 @@ const Page = () => {
         <div className="text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
           Repay to Liquidity Pool
         </div>
-        {/* <p className="text-white text-center items-center">
-          sample text here
-        </p> */}
+        <p className="text-white font-extrabold italic text-center items-center relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500">
+          Note - 
+        </p>
         <div className="text-2xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
           {userTRXRepayAmount
             ? `Current outstanding Debt: ${userTRXRepayAmount} TRX`
             : userJSTRepayAmount
-            ? `Current outstanding Debt: ${userJSTRepayAmount} JST`
-            : ""}
+              ? `Current outstanding Debt: ${userJSTRepayAmount} JST`
+              : "You're Currently Debt Free."}
         </div>
         <div className="w-full px-4 md:px-[12rem] lg:px-[20rem] flex flex-col gap-4 text-black dark:text-white">
           <button
@@ -444,8 +471,8 @@ const Page = () => {
             {userTRXRepayAmount
               ? `${userTRXRepayAmount} TRX`
               : userJSTRepayAmount
-              ? `${userJSTRepayAmount} JST`
-              : ""}
+                ? `${userJSTRepayAmount} JST`
+                : ""}
           </button>
         </div>
       </div>
