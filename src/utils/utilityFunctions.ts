@@ -3,6 +3,8 @@ import {
   LendingPoolABI,
   JSTAbi,
   JST_CONTRACT_ADDRESS,
+  PriceOracleABI,
+  PriceOracle_CONTRACT_ADDRESS,
 } from "@/constants";
 // Function to get the TronWeb instance
 export const getTronWeb = async () => {
@@ -250,6 +252,90 @@ export const getDaysElapsedAfterInvestment = async () => {
   }
 };
 
-export const BorrowFromContract = async () => {
-  // Need to make a smart contract function of transferring funds from contract to user
+export const getTRXToJST = async (amt: number) => {
+  const tronWeb = await getTronWeb();
+  try {
+    if (!tronWeb) {
+      console.error("TronWeb not initialized");
+      return 0;
+    }
+
+    const PriceOracleContract = await tronWeb.contract(
+      PriceOracleABI,
+      PriceOracle_CONTRACT_ADDRESS
+    );
+
+    const price = await PriceOracleContract.getTRXToJST(amt).call();
+    const dec = tronWeb.toDecimal(price._hex);
+    console.log(dec);
+    return dec;
+  } catch (error) {
+    console.log("Fetching TRX To JST Price Error", error);
+  }
+};
+
+export const getJSTToTRX = async (amt: number) => {
+  const tronWeb = await getTronWeb();
+  try {
+    if (!tronWeb) {
+      console.error("TronWeb not initialized");
+      return 0;
+    }
+
+    const PriceOracleContract = await tronWeb.contract(
+      PriceOracleABI,
+      PriceOracle_CONTRACT_ADDRESS
+    );
+
+    const price = await PriceOracleContract.getJSTToTRX(amt).call();
+    const dec = tronWeb.toDecimal(price._hex);
+    console.log(dec);
+    return dec;
+  } catch (error) {
+    console.log("Fetching JST To TRX Price Error", error);
+  }
+};
+
+export const BorrowTRX = async (amt: number) => {
+  const tronWeb = await getTronWeb();
+  try {
+    if (!tronWeb) {
+      console.error("TronWeb not initialized");
+      return 0;
+    }
+
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
+
+    console.log(myContract);
+
+    const tx = await myContract.BorrowTRX(amt).send();
+    console.log(tx);
+    return tx;
+  } catch (error) {
+    console.log("Borrow TRX Error: ", error);
+  }
+};
+
+export const BorrowJST = async (amt: number) => {
+  const tronWeb = await getTronWeb();
+  try {
+    if (!tronWeb) {
+      console.error("TronWeb not initialized");
+      return 0;
+    }
+
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
+
+    const tx = await myContract.BorrowJST(amt).send();
+    console.log(tx);
+    return tx;
+  } catch (error) {
+    console.log("Borrow JST Error: ", error);
+  }
 };

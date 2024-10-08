@@ -11,6 +11,8 @@ import {
   withdrawTRX,
   withdrawJST,
   getDaysElapsedAfterInvestment,
+  BorrowTRX,
+  BorrowJST,
   getTronWeb,
 } from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
@@ -168,7 +170,7 @@ const Page = () => {
   const handleUserWithdrawalState = async () => {
     const daysElapsed: number | undefined =
       await getDaysElapsedAfterInvestment();
-
+    console.log(daysElapsed);
     if (daysElapsed === undefined) return;
     if (daysElapsed < 1) {
       setWithdrawalState("Not even a day has passed");
@@ -182,6 +184,15 @@ const Page = () => {
           15 - daysElapsed
         )}`
       );
+    }
+  };
+
+  const handleBorrow = async () => {
+    if (borrowToken == "TRX") {
+      console.log("Inside borrow TRX");
+      await BorrowTRX(borrowAmount);
+    } else {
+      await BorrowJST(borrowAmount);
     }
   };
 
@@ -267,12 +278,6 @@ const Page = () => {
               Withdraw
             </button>
           )}
-
-          <div>
-            <h1>
-              {withdrawalState} {}
-            </h1>
-          </div>
         </div>
       </div>
 
@@ -311,9 +316,9 @@ const Page = () => {
           />
           <button
             className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
-            onClick={handleInvestment}
+            onClick={handleBorrow}
           >
-            Borrow
+            Borrow {borrowToken}
           </button>
         </div>
       </div>
