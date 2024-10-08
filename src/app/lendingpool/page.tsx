@@ -404,8 +404,7 @@ const Page = () => {
         <div className="w-full px-4 md:px-[12rem] lg:px-[20rem] flex flex-col gap-4 text-black dark:text-white">
           <button
             className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
-            onClick={handleRepay}
-          >
+            onClick={handleRepay}>
             Repay {userTRXRepayAmount ? `${userTRXRepayAmount} TRX` : userJSTRepayAmount ? `${userJSTRepayAmount} JST` : ""}
           </button>
         </div>
