@@ -352,7 +352,7 @@ const Page = () => {
                     userTRXRepayAmount
                       ? `Current Debt : ${userTRXRepayAmount} TRX`
                       : userJSTBorrowedAmount
-                      ? `Currently Borrowed : ${userJSTBorrowedAmount} JST`
+                      ? `Current Debt : ${userJSTBorrowedAmount} JST`
                       : "You're Currently Debt Free."
                   }
                 />
