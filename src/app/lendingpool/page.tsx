@@ -221,12 +221,12 @@ const Page = () => {
       <div className="min-h-[100vh] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex flex-col gap-5 md:gap-10 justify-center">
         {/* Radial gradient for the container to give a faded look */}
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-        <div className="-mb-5 mt-20 md:mt-0 text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
+        <div className="mt-20 md:mt-5 text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
           Liquidity Pool
         </div>
 
-        <div className="px-4 md:px-[6rem]">
-          <p className="text-white text-2xl font-bold "> Token Pair TRX/JST</p>
+        <div className="px-6 md:px-[6rem] py-4">
+          <p className="text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500"> Token Pair TRX/JST</p>
 
           {dataFetched && <TextGenerateEffect
             words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
@@ -244,7 +244,8 @@ const Page = () => {
             words={`Your JST Investment: ${UserJSTBalance} JST`}
           />}
         </div>
-        <div className="px-4 md:px-[6rem]">
+
+        <div className="px-6 md:px-[6rem]">
           <FeatureCards />
         </div>
       </div>
@@ -255,10 +256,10 @@ const Page = () => {
         <div className="text-5xl sm:text-6xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
           Add TRX or JST Liquidity in the Pool
         </div>
-        <div className="text-5xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
+        <div className="text-2xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
           Earn upto 6% APY
         </div>
-        <div className="w-full px-4 md:px-[12rem] lg:px-[20rem] flex flex-col gap-4 text-black dark:text-white">
+        <div className="w-full px-6 md:px-[12rem] lg:px-[20rem] flex flex-col gap-4 text-black dark:text-white">
           <Select value={investmentToken} onValueChange={setInvestmentToken}>
             <SelectTrigger className="w-full border-white min-h-10">
               <SelectValue placeholder="Select Token" />
@@ -288,7 +289,7 @@ const Page = () => {
       {/* winthdraw Section */}
 
       <div
-        className="bg-white dark:bg-black py-[10rem] md:py-[11rem] lg:py-[12rem] px-4 md:px-6"
+        className="bg-white min-h-[100vh] dark:bg-black py-[10rem] md:py-[11rem] lg:py-[12rem] px-4 md:px-6"
         id="withdraw"
       >
         <div className="text-5xl sm:text-6xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
