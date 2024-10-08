@@ -1,8 +1,15 @@
-export const CONTRACT_ADDRESS = "TVQFYdkqmz7krjq85YjBXzn5jTBpGyeuqN";
+export const LP_CONTRACT_ADDRESS = "TWcbTTEeNmCkMMX9KapsZmjw6BodQr1G8N";
 export const JST_CONTRACT_ADDRESS = "TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3";
+
 export const LendingPoolABI = [
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "address",
+        name: "_priceOracle",
+        type: "address",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "constructor",
   },
@@ -12,11 +19,189 @@ export const LendingPoolABI = [
       {
         indexed: false,
         internalType: "address",
-        name: "",
+        name: "borrower",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountJST",
+        type: "uint256",
+      },
+    ],
+    name: "BorrowedJST",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "borrower",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountTRX",
+        type: "uint256",
+      },
+    ],
+    name: "BorrowedTRX",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountJST",
+        type: "uint256",
+      },
+    ],
+    name: "FlashLoanJSTWithdrawn",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountTRX",
+        type: "uint256",
+      },
+    ],
+    name: "FlashLoanTRXWithdrawn",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "investor",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountJST",
+        type: "uint256",
+      },
+    ],
+    name: "JSTAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "investor",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountJST",
+        type: "uint256",
+      },
+    ],
+    name: "JSTWithdrawn",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "investor",
         type: "address",
       },
     ],
     name: "NewInvestor",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "borrower",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountRepaidWithIntrest",
+        type: "uint256",
+      },
+    ],
+    name: "RepaidJST",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "borrower",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountRepaidWithIntrest",
+        type: "uint256",
+      },
+    ],
+    name: "RepiadTRX",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "investor",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountTRX",
+        type: "uint256",
+      },
+    ],
+    name: "TRXAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "investor",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amountTRX",
+        type: "uint256",
+      },
+    ],
+    name: "TRXWithdrawn",
     type: "event",
   },
   {
@@ -33,6 +218,93 @@ export const LendingPoolABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "JST_CONTRACT_ADDRESS_NILE",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "PROFIT_RATE",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "RAPID_LOANS_CORE",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "subject",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "WithdrawFlashLoanJST",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amountJSTWithdrawn",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address payable",
+        name: "subject",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "WithdrawFlashLoanTRX",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amountTRXWithdrawn",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -43,9 +315,9 @@ export const LendingPoolABI = [
     name: "addJST",
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: "uint256",
+        name: "balanceJST",
+        type: "uint256",
       },
     ],
     stateMutability: "nonpayable",
@@ -56,9 +328,9 @@ export const LendingPoolABI = [
     name: "addTRX",
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: "uint256",
+        name: "balanceTRX",
+        type: "uint256",
       },
     ],
     stateMutability: "payable",
@@ -91,43 +363,12 @@ export const LendingPoolABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "flashLoanJST",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "flashLoanCore",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "flashLoanTRX",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "getContractJSTBalance",
     outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "amountJST",
         type: "uint256",
       },
     ],
@@ -140,7 +381,7 @@ export const LendingPoolABI = [
     outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "amountTRX",
         type: "uint256",
       },
     ],
@@ -151,7 +392,7 @@ export const LendingPoolABI = [
     inputs: [
       {
         internalType: "address",
-        name: "_add",
+        name: "investorAddress",
         type: "address",
       },
     ],
@@ -179,9 +420,29 @@ export const LendingPoolABI = [
             name: "balanceJST",
             type: "uint256",
           },
+          {
+            internalType: "uint256",
+            name: "lastInvestedTRXTimestamp",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "lastInvestedJSTTimestamp",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "borrowedTRX",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "borrowedJST",
+            type: "uint256",
+          },
         ],
         internalType: "struct LiquidityPool.investor",
-        name: "",
+        name: "investorStruct",
         type: "tuple",
       },
     ],
@@ -192,11 +453,30 @@ export const LendingPoolABI = [
     inputs: [
       {
         internalType: "address",
-        name: "_user",
+        name: "investorAddress",
         type: "address",
       },
     ],
     name: "getUserJSTBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amountJST",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "investorAddress",
+        type: "address",
+      },
+    ],
+    name: "getUserJSTInvestmentWithdrawTime",
     outputs: [
       {
         internalType: "uint256",
@@ -211,11 +491,68 @@ export const LendingPoolABI = [
     inputs: [
       {
         internalType: "address",
-        name: "_user",
+        name: "investorAddress",
+        type: "address",
+      },
+    ],
+    name: "getUserLastInvestedJSTTimestamp",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "investorAddress",
+        type: "address",
+      },
+    ],
+    name: "getUserLastInvestedTRXTimestamp",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "investorAddress",
         type: "address",
       },
     ],
     name: "getUserTRXBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amountTRX",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "investorAddress",
+        type: "address",
+      },
+    ],
+    name: "getUserTRXInvestmentWithdrawTime",
     outputs: [
       {
         internalType: "uint256",
@@ -240,6 +577,45 @@ export const LendingPoolABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "priceOracle",
+    outputs: [
+      {
+        internalType: "contract PriceOracle",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "profitFromFlashLoansJST",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "profitFromFlashLoansTRX",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -247,7 +623,27 @@ export const LendingPoolABI = [
         type: "uint256",
       },
     ],
-    name: "withdrawJST",
+    name: "repayJST",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "repayTRX",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "rapidLoansCore",
+        type: "address",
+      },
+    ],
+    name: "setRapidLoansCoreAddress",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -260,8 +656,33 @@ export const LendingPoolABI = [
         type: "uint256",
       },
     ],
+    name: "withdrawJST",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amountWithdrawnJST",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
     name: "withdrawTRX",
-    outputs: [],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amountWithdrawnTRX",
+        type: "uint256",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },

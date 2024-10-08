@@ -8,6 +8,9 @@ import {
   fetchUserTRXBalance,
   InvestInTRX,
   InvestInJST,
+  withdrawTRX,
+  withdrawJST,
+  getDaysElapsedAfterInvestment,
   getTronWeb,
 } from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
@@ -29,6 +32,7 @@ const Page = () => {
   const [investmentToken, setInvestmentToken] = useState<string>("TRX");
   const [investmentAmount, setInvestmentAmount] = useState<number>(0);
 
+  const [withdrawalState, setWithdrawalState] = useState("");
   const [borrowToken, setBorrowToken] = useState<string>("TRX");
   const [borrowAmount, setBorrowAmount] = useState<number>(0);
 
@@ -44,7 +48,7 @@ const Page = () => {
         const user_TRX = await fetchUserTRXBalance();
         console.log("user Trx", user_TRX);
         setUserTRXBalance(user_TRX);
-
+        handleUserWithdrawalState();
         const user_JST = await fetchUserJSTBalance();
         setUserJSTBalance(user_JST);
       } catch (error) {
@@ -148,6 +152,39 @@ const Page = () => {
     });
   };
 
+  const handleWithdrawal = async () => {
+    if (investmentToken === "TRX") {
+      console.log("Inside TRX");
+      const balanceInSun = UserTRXBalance * 1000000;
+      const txId = await withdrawTRX(balanceInSun);
+      console.log(txId);
+    } else {
+      console.log("Inside JST");
+      const txId = await withdrawJST(UserJSTBalance);
+      console.log(txId);
+    }
+  };
+
+  const handleUserWithdrawalState = async () => {
+    const daysElapsed: number | undefined =
+      await getDaysElapsedAfterInvestment();
+
+    if (daysElapsed === undefined) return;
+    if (daysElapsed < 1) {
+      setWithdrawalState("Not even a day has passed");
+    } else if (daysElapsed >= 15) {
+      setWithdrawalState("You can withdraw");
+    } else {
+      setWithdrawalState(
+        `${Math.round(
+          daysElapsed
+        )} days have passed, you may withdraw after ${Math.round(
+          15 - daysElapsed
+        )}`
+      );
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-black flex flex-col">
       <div className="min-h-[100vh] w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex flex-col gap-5 md:gap-10 justify-center">
@@ -159,27 +196,22 @@ const Page = () => {
 
         <div className="px-4 md:px-[6rem]">
           <p className="text-white text-2xl font-bold "> Token Pair TRX/JST</p>
-          {contractTRXBalance > 0 && (
-            <TextGenerateEffect
-              words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
-            />
-          )}
-          {contractJSTBalance > 0 && (
-            <TextGenerateEffect
-              words={`Amount of JST in Liquidity Pool: ${contractJSTBalance} JST`}
-            />
-          )}
 
-          {UserTRXBalance > 0 && (
-            <TextGenerateEffect
-              words={`Your TRX Investment: ${UserTRXBalance} TRX`}
-            />
-          )}
-          {UserJSTBalance > 0 && (
-            <TextGenerateEffect
-              words={`Your JST Investment: ${UserJSTBalance} JST`}
-            />
-          )}
+          <TextGenerateEffect
+            words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
+          />
+
+          <TextGenerateEffect
+            words={`Amount of JST in Liquidity Pool: ${contractJSTBalance} JST`}
+          />
+
+          <TextGenerateEffect
+            words={`Your TRX Investment: ${UserTRXBalance} TRX`}
+          />
+
+          <TextGenerateEffect
+            words={`Your JST Investment: ${UserJSTBalance} JST`}
+          />
         </div>
         <div className="px-4 md:px-[6rem]">
           <FeatureCards />
@@ -226,6 +258,21 @@ const Page = () => {
           >
             Invest in {investmentToken}
           </button>
+
+          {withdrawalState == "You may withdraw" && (
+            <button
+              className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
+              onClick={handleWithdrawal}
+            >
+              Withdraw
+            </button>
+          )}
+
+          <div>
+            <h1>
+              {withdrawalState} {}
+            </h1>
+          </div>
         </div>
       </div>
 

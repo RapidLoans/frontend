@@ -1,5 +1,5 @@
 import {
-  CONTRACT_ADDRESS,
+  LP_CONTRACT_ADDRESS,
   LendingPoolABI,
   JSTAbi,
   JST_CONTRACT_ADDRESS,
@@ -34,35 +34,20 @@ export const getTronWeb = async () => {
   return null; // Return null if TronLink is not available or access is denied
 };
 
-export const fetchContractBalance = async () => {
-  const tronWeb = await getTronWeb();
-  if (!tronWeb) {
-    console.error("TronWeb instance not available");
-    return 0;
-  }
-
-  try {
-    const balanceInSun: number = await tronWeb.trx.getBalance(CONTRACT_ADDRESS);
-    console.log("balance", balanceInSun);
-    return balanceInSun;
-  } catch (error) {
-    console.error("Error fetching contract balance:", error);
-    return 0;
-  }
-};
-
 export const fetchContractTRXBalance = async () => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) return 0;
 
   try {
-    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
     const tx = await myContract.getContractTRXBalance().call();
     console.log("tx:", tx);
 
-    const hex = tx._hex;
-    const dec = parseInt(hex, 16);
-    const valueInTRX = dec / 1000000;
+    const res = tronWeb.toDecimal(tx.amountTRX);
+    const valueInTRX = res / 1000000;
     console.log(`TRX Balance (decimal): ${valueInTRX}`);
 
     return valueInTRX;
@@ -77,12 +62,14 @@ export const fetchContractJSTBalance = async () => {
   if (!tronWeb) return 0;
 
   try {
-    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
     const tx = await myContract.getContractJSTBalance().call();
     console.log("tx:", tx);
 
-    const hex = tx._hex;
-    const dec = parseInt(hex, 16);
+    const dec = tronWeb.toDecimal(tx.amountJST);
     const valueInJST = dec / 1000000000000000000;
     console.log(`JST Balance (decimal): ${valueInJST}`);
 
@@ -98,13 +85,15 @@ export const fetchUserJSTBalance = async () => {
   if (!tronWeb) return 0;
 
   try {
-    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
     const tx = await myContract
       .getUserJSTBalance(tronWeb.defaultAddress.base58)
       .call();
-
-    const hex = tx._hex;
-    const dec = parseInt(hex, 16);
+    console.log("User Jst", tx);
+    const dec = tronWeb.toDecimal(tx.amountJST);
     const valueInJST = dec / 1000000000000000000;
     console.log(`USER JST Balance (decimal): ${valueInJST}`);
 
@@ -120,14 +109,16 @@ export const fetchUserTRXBalance = async () => {
   if (!tronWeb) return 0;
 
   try {
-    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
     const tx = await myContract
       .getUserTRXBalance(tronWeb.defaultAddress.base58)
       .call();
 
-    const hex = tx._hex;
-    const dec = parseInt(hex, 16);
-    const valueInTRX = dec / 1000000;
+    const res = tronWeb.toDecimal(tx.amountTRX);
+    const valueInTRX = res / 1000000;
     console.log(`User TRX Balance (decimal): ${valueInTRX}`);
 
     return valueInTRX;
@@ -142,7 +133,10 @@ export const InvestInTRX = async (val: number) => {
   if (!tronWeb) return;
 
   try {
-    const myContract = await tronWeb.contract(LendingPoolABI, CONTRACT_ADDRESS);
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
     const amountInSun = val * 1000000;
     const tx = await myContract.addTRX().send({ callValue: amountInSun });
     const transactionInfo = await tronWeb.trx.getTransactionInfo(tx);
@@ -161,13 +155,14 @@ export const InvestInJST = async (val: number) => {
   try {
     const jst = await tronWeb.contract(JSTAbi, JST_CONTRACT_ADDRESS);
     try {
-      await jst.approve(CONTRACT_ADDRESS, valueInJSTTokens).send();
+      await jst.approve(LP_CONTRACT_ADDRESS, valueInJSTTokens).send();
       const myContract = await tronWeb.contract(
         LendingPoolABI,
-        CONTRACT_ADDRESS
+        LP_CONTRACT_ADDRESS
       );
 
       const tx = await myContract.addJST(valueInJSTTokens).send();
+      console.log(tx);
       return tx;
     } catch (error) {
       console.error("Transaction Rejected by User", error);
@@ -178,6 +173,83 @@ export const InvestInJST = async (val: number) => {
     return "declined";
   }
 };
+
+// Withdraw TRX function
+export const withdrawTRX = async (amount: number) => {
+  const tronWeb = await getTronWeb();
+  try {
+    if (!tronWeb) {
+      console.error("TronWeb not initialized");
+      return;
+    }
+
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
+
+    // Call the withdrawTRX method from the contract
+    const tx = await myContract.withdrawTRX(amount).send();
+
+    console.log("Transaction successful:", tx);
+    return tx;
+  } catch (error) {
+    console.error("Error withdrawing TRX:", error);
+  }
+};
+
+export const withdrawJST = async (amount: number) => {
+  const tronWeb = await getTronWeb();
+  try {
+    if (!tronWeb) {
+      console.error("TronWeb not initialized");
+      return;
+    }
+
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
+
+    // Call the withdrawTRX method from the contract
+    const tx = await myContract.withdrawJST(amount).send();
+
+    console.log("Transaction successful:", tx);
+    return tx;
+  } catch (error) {
+    console.error("Error withdrawing TRX:", error);
+  }
+};
+
+export const getDaysElapsedAfterInvestment = async () => {
+  const tronWeb = await getTronWeb();
+  try {
+    if (!tronWeb) {
+      console.error("TronWeb not initialized");
+      return 0;
+    }
+
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
+
+    const tx = await myContract
+      .getUserLastInvestedTRXTimestamp(tronWeb.defaultAddress.base58)
+      .call();
+
+    const dec = tronWeb.toDecimal(tx);
+    const currentTimestamp = Math.floor(Date.now() / 1000); // `Date.now()` gives milliseconds, so divide by 1000
+
+    // Calculate the difference in seconds
+    const timeElapsedInSeconds = currentTimestamp - dec;
+    const timeElapsedInDays = timeElapsedInSeconds / 86400;
+    return timeElapsedInDays;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const BorrowFromContract = async () => {
   // Need to make a smart contract function of transferring funds from contract to user
 };

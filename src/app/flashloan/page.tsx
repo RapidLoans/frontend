@@ -11,7 +11,7 @@ const FlashLoan = () => {
           Flash Loans <br /> Developer Guide
         </p>
       </div>
-      <TracingBeam className="px-6 ">
+      <TracingBeam className="px-6">
         <div className="antialiased pt-4 relative">
           {dummyContent.map((item, index) => (
             <div key={`content-${index}`} className="mb-10">
