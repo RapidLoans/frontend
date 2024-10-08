@@ -351,14 +351,60 @@ const Page = () => {
                   words={
                     userTRXRepayAmount
                       ? `Current Debt : ${userTRXRepayAmount} TRX`
-                      : userJSTBorrowedAmount
-                      ? `Current Debt : ${userJSTBorrowedAmount} JST`
+                      : userJSTRepayAmount
+                      ? `Current Debt : ${userJSTRepayAmount} JST`
                       : "You're Currently Debt Free."
                   }
                 />
               )}
             </div>
           </div>
+
+          {/* {dataFetched && (
+            <TextGenerateEffect
+              words={`Amount of TRX in Liquidity pool: ${contractTRXBalance} TRX`}
+            />
+          )}
+
+          {dataFetched && (
+            <TextGenerateEffect
+              words={`Amount of JST in Liquidity Pool: ${contractJSTBalance} JST`}
+            />
+          )} */}
+
+          {/* {dataFetched && (
+            <TextGenerateEffect
+              words={`Your TRX Investment: ${UserTRXBalance} TRX`}
+            />
+          )}
+
+          {dataFetched && (
+            <TextGenerateEffect
+              words={`Your JST Investment: ${UserJSTBalance} JST`}
+            />
+          )} */}
+
+          {/* {dataFetched && (userTRXBorrowedAmount || userJSTBorrowedAmount ) && (
+            <TextGenerateEffect
+              words={
+                userTRXBorrowedAmount > 0
+                  ? `Currently Borrowed : ${userTRXBorrowedAmount} TRX`
+                  : `Currently Borrowed : ${userJSTBorrowedAmount} JST`
+              }
+            />
+          )}
+
+          {dataFetched && (
+            <TextGenerateEffect
+              words={
+                userTRXRepayAmount
+                  ? `Current Debt : ${userTRXRepayAmount} TRX`
+                  : userJSTBorrowedAmount
+                  ? `Currently Borrowed : ${userJSTBorrowedAmount} JST`
+                  : "You're Currently Debt Free."
+              }
+            />
+          )} */}
         </div>
 
         <div className="px-6 md:px-[6rem]">
@@ -496,6 +542,11 @@ const Page = () => {
             onClick={handleRepay}
           >
             Repay Debt
+            {userTRXRepayAmount
+              ? `${userTRXRepayAmount} TRX`
+              : userJSTRepayAmount
+              ? `${userJSTRepayAmount} JST`
+              : ""}
           </button>
         </div>
       </div>
