@@ -10,22 +10,22 @@ function AddressBook() {
       </div>
       <div className="text-lg md:text-2xl my-[2rem] flex justify-center w-full font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-4">
         <p className="max-w-4xl break-words px-4">
-          ⁠PriceOracle : THVZw2pkszLmoDFziD9hZ3ddNZRiiyDKc
+          ⁠PriceOracle : THFynJj4PuKE6k83VEYMkLods4s9E9iRE5
         </p>
       </div>
       <div className="text-lg md:text-2xl my-[2rem] flex justify-center w-full font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-4">
         <p className="max-w-4xl break-words px-4">
-          LiquidityPool : TJmcwgjZRju997ySsSGCi8SwPqJcoaEjrE
+          LiquidityPool : TNW2bEeTHh7xAMFaUxcpVAym7ZcyCDFn3P
         </p>
       </div>
       <div className="text-lg md:text-2xl my-[2rem] flex justify-center w-full font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-4">
         <p className="max-w-4xl break-words px-4">
-          RapidLoansCore : TChb1a3pYMgnw9YjijF8TTHNzmGP42qqfm
+          RapidLoansCore : TQGFMUdmTKC5S5rXaY1UAtjF14M64phMER
         </p>
       </div>
       <div className="text-lg md:text-2xl my-[2rem] flex justify-center w-full font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-4">
         <p className="max-w-4xl break-words px-4">
-          Subject : TZ8nUrGmfvXce7TsYBXxX3iNJzVbQPYYKb
+          Subject : TPsYJpTEnWvbQd67WwMFpqPdcW9BDnji5b
         </p>
       </div>
     </div>
