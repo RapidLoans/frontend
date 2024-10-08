@@ -2,6 +2,7 @@
 import React from "react";
 import { TracingBeam } from "@/components/ui/tracing-bean";
 import Image from "next/image";
+import Link from "next/link";
 
 const FlashLoan = () => {
   return (
@@ -171,13 +172,27 @@ const dummyContent = [
           <li>
             • Checkout a Subject contract, available in the RapidLoans/contracts
             repo too, that is an example of a customer contract using RapidLoans
-            to perform arbitrage. You can also try it yourself on the
-            TronIde./**LINK */
+            to perform arbitrage. You can also try it yourself on the TronIde{" "}
+            <Link
+              className="text-blue-500 "
+              href={
+                "https://www.tronide.io/#optimize=false&runs=200&evmVersion=null&version=soljson_v0.8.6+commit.0e36fba.js"
+              }
+            >
+              Here.
+            </Link>
           </li>
+
+          <br />
           <li>
             • The process for JST is the same, just swap out TRX functions for
             JST ones. We highly recommend giving it a test run on the TRON IDE
             before taking it on-chain.
+          </li>
+          <br />
+          <li>
+            • Get the interfaces from github repo, link given in navbar
+            dropdown.
           </li>
         </ul>
         <br />
