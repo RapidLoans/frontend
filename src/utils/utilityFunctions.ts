@@ -121,7 +121,7 @@ export const fetchUserTRXBalance = async () => {
     const valueInTRX = res / 1000000;
     console.log(`User TRX Balance (decimal): ${valueInTRX}`);
 
-    return valueInTRX;
+    return valueInTRX || 0;
   } catch (error) {
     console.error("Error in fetching TRX Balance:", error);
     return 0;
