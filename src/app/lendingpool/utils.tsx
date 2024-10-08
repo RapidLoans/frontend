@@ -47,11 +47,17 @@ export const FeatureCards = () => {
           link={"/lendingpool#borrow"}
         />
         <FeatureCard
+          title="Withdraw"
+          description="Withdraw funds from liquidity pool"
+          icon={Zap}
+          link={"/lendingpool#withdraw"}
+        />
+        {/* <FeatureCard
           title="Flash Loan"
           description="Leverage instant, no-collateral flash loans"
           icon={Zap}
           link={"/flashloan"}
-        />
+        /> */}
       </div>
     </FadeInAnimation>
   );
