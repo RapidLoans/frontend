@@ -15,6 +15,7 @@ import {
   getUserTRXAmountToRepay,
   borrowJST,
   getTronWeb,
+  getUserJSTAmountToRepay,
 } from "@/utils/utilityFunctions";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { FeatureCards } from "./utils";
@@ -40,6 +41,9 @@ const Page = () => {
   const [borrowToken, setBorrowToken] = useState<string>("TRX");
   const [borrowAmount, setBorrowAmount] = useState<number>(0);
 
+  const [userTRXRepayAmount, setUserTRXRepayAmount] = useState<number>(0)
+  const [userJSTRepayAmount, setUserJSTRepayAmount] = useState<number>(0)
+
   const [dataFetched, setDataFetched] = useState<boolean>(false);
 
   useEffect(() => {
@@ -59,6 +63,9 @@ const Page = () => {
         setUserJSTBalance(user_JST);
 
         handleUserWithdrawalState();
+
+        handleRepayAmount()
+
         setDataFetched(() => true);
       } catch (error) {
         console.error("Error fetching contract data:", error);
@@ -217,10 +224,17 @@ const Page = () => {
     }
   };
 
+  const handleRepay = async () => {
+    toast.success("repay Success")
+  }
+
   const handleRepayAmount = async () => {
-    const repayAmount = await getUserTRXAmountToRepay();
-    console.log(repayAmount);
+    const TRXRepayAmount = await getUserTRXAmountToRepay();
+    const JSTRepayAmount = await getUserJSTAmountToRepay();
+    setUserTRXRepayAmount(TRXRepayAmount)
+    setUserJSTRepayAmount(JSTRepayAmount)
   };
+
 
   return (
     <div className="bg-white dark:bg-black flex flex-col">
@@ -370,6 +384,29 @@ const Page = () => {
             onClick={handleRepayAmount}
           >
             Repay Amount
+          </button>
+        </div>
+      </div>
+
+      {/* repay section  */}
+
+      <div className="bg-white px-2 md:px-4 flex flex-col gap-8 dark:bg-black py-[6rem] md:py-[7rem] lg:py-[8rem]"
+        id="repay">
+        <div className="text-5xl sm:text-7xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8 text-center">
+          Repay to Liquidity Pool
+        </div>
+        {/* <p className="text-white text-center items-center">
+          sample text here
+        </p> */}
+        <div className="text-2xl sm:text-3xl font-bold relative bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 text-center">
+          {userTRXRepayAmount ? `Current outstanding Debt: ${userTRXRepayAmount} TRX` : userJSTRepayAmount ? `Current outstanding Debt: ${userJSTRepayAmount} JST` :""}
+        </div>
+        <div className="w-full px-4 md:px-[12rem] lg:px-[20rem] flex flex-col gap-4 text-black dark:text-white">
+          <button
+            className="border border-white text-blac dark:text-white px-4 py-2 rounded-md"
+            onClick={handleRepay}
+          >
+            Repay {userTRXRepayAmount ? `${userTRXRepayAmount} TRX` : userJSTRepayAmount ? `${userJSTRepayAmount} JST` : ""}
           </button>
         </div>
       </div>

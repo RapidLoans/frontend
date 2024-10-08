@@ -355,10 +355,37 @@ export const getUserTRXAmountToRepay = async () => {
     const tx = await myContract
       .getUserTRXAmountToRepay(tronWeb.defaultAddress.base58)
       .call();
-    const dec = tronWeb.toDecimal(tx);
+    const dec: number = tronWeb.toDecimal(tx);
     console.log(dec);
     return dec;
   } catch (error) {
     console.log(error);
+    return 0;
+  }
+};
+export const getUserJSTAmountToRepay = async () => {
+  const tronWeb = await getTronWeb();
+  try {
+    if (!tronWeb) {
+      console.error("TronWeb not initialized");
+      return 0;
+    }
+
+    const myContract = await tronWeb.contract(
+      LendingPoolABI,
+      LP_CONTRACT_ADDRESS
+    );
+
+    // const tx = await myContract
+    //   .getUserTRXAmountToRepay(tronWeb.defaultAddress.base58)
+    //   .call();
+    
+    const tx = 0
+    const dec: number = tronWeb.toDecimal(tx);
+    console.log(dec);
+    return dec;
+  } catch (error) {
+    console.log(error);
+    return 0;
   }
 };
