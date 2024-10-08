@@ -369,7 +369,7 @@ export const repayTRXDebt = async (amt: number) => {
 export const repayJSTDebt = async (amt: number) => {
   const tronWeb = await getTronWeb();
   if (!tronWeb) return;
-  const amtInDec = amt * 1000000000000000000;
+  const amtInDec = BigInt(amt * 1000000000000000000);
   try {
     const jst = await tronWeb.contract(JSTAbi, JST_CONTRACT_ADDRESS);
     try {
